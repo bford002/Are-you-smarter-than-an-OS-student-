@@ -18,12 +18,14 @@ const usersRouter = require('./routes/users');
 
 app.use('/users', usersRouter);
 
+const HOST = '0.0.0.0';
+
 connection
   .then(()=>{
     console.log('MongoDB database connection established successfully');
   })
   .then(()=>{
-    app.listen(PORT, (err) => {
+    app.listen(PORT, HOST, (err) => {
       if (err) { console.log(err); }
       console.log('Server listening on PORT', PORT);
     });
