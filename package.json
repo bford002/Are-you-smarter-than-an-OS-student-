@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server",
+    "startNode": "node server",
     "build": "rimraf dist && webpack",
     "build:client": "webpack --config webpack.config.js --mode production",
     "dev": "concurrently \"npm run build\" \"npm start\" -n webpack,server -c #55C3FF,#FFCA28",
