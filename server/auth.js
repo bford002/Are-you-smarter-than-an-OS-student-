@@ -1,9 +1,10 @@
 const passport = require('passport');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+require('dotenv').config();
 
-const GOOGLE_CLIENT_ID = '1051270624705-s89er0bcl4kmkdfja68f8fvpugihsa38.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const User = require('./db/models/user.model.js');
 
 passport.use(new GoogleStrategy({

@@ -9,7 +9,7 @@ require('./auth');
 //console.log(connection);
 
 const app = express();
-app.use(session({ secret: 'cats' }));
+app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 const CLIENT_PATH = path.resolve(__dirname, '../client/dist');
