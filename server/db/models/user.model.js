@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const findOrCreate = require('mongoose-findorcreate');
 
 const Schema = mongoose.Schema;
 
@@ -10,6 +11,13 @@ const userSchema = new Schema({
     trim: true,
     minlength: 1
   },
+  name: {
+    type: String,
+    required: true,
+    unique: false,
+    trim: true,
+    minlength: 1
+  },
   qAttempted: {
     type: Number,
     default: 0
@@ -18,8 +26,9 @@ const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  imageURL: {
-    type: String
+  imageUrl: {
+    type: String,
+    default: 'URL HERE'
   },
   wins: {
     type: Number,
@@ -32,6 +41,8 @@ const userSchema = new Schema({
 }, {
   timestamps: true,
 });
+
+userSchema.plugin(findOrCreate);
 
 const User = mongoose.model('User', userSchema);
 

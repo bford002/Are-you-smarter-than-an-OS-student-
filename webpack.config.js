@@ -24,5 +24,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [new htmlWebpackPlugin({template: './client/src/index.html'})]
+  plugins: [
+    new htmlWebpackPlugin({template: './client/src/index.html'})
+  ]
 };
