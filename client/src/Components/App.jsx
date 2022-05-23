@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-console.log(window);
 const CLIENT_URL = process.env.CLIENT_URL;
 const PORT = process.env.PORT;
 
