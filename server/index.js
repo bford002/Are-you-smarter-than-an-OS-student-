@@ -16,7 +16,11 @@ const CLIENT_PATH = path.resolve(__dirname, '../client/dist');
 const PORT = process.env.PORT || 8080;
 
 
-app.use(cors());
+app.use(cors({ 
+  origin: process.env.CLIENT_URL,
+  methods: 'GET, PUT, POST',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.static(CLIENT_PATH));
 
