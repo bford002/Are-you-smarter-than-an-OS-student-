@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/iAmGjert/Are-you-smarter-than-an-OS-student-#readme",
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.8.1",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
