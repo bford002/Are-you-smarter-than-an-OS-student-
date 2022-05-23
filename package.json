@@ -30,6 +30,7 @@
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
+    "dotenv-webpack": "^7.1.0",
     "express-session": "^1.17.3",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",

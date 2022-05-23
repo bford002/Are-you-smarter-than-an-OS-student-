@@ -25,7 +25,6 @@ router.get('/google/callback',
   })
 );
 router.get('/logout', (req, res)=>{
-  const logUser = req.user.name;
   req.logOut(()=>{
     res.redirect(CLIENT_URL);
   });

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+console.log(window);
+const CLIENT_URL = process.env.CLIENT_URL;
+const PORT = process.env.PORT;
 
 export const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     const getUser = () => {
       const options = {
-        url: 'http://localhost:3000/auth/login/success',
+        url: `${CLIENT_URL}:${PORT}/auth/login/success`,
         method: 'GET',
         withCredentials: true,
         headers: {
@@ -32,17 +35,12 @@ export const App = () => {
     };
     getUser();
   }, []);
-  // axios.get('/users')
-  //   .then((users)=>{
-  //     console.log(users.data);
-  //   });
-  //
   return (
     <div>
-      <h1>We made it! { user ? user.name : 'Guest' }</h1>
-      { user ? <a href='http://localhost:3000/auth/logout'>
+      <h1>Welcome, { user ? user.name : 'guest' }</h1>
+      { user ? <a href={ `${CLIENT_URL}:${PORT}/auth/logout` }>
         <button>Logout</button>
-      </a> : <a href='http://localhost:3000/auth/google'>
+      </a> : <a href={ `${CLIENT_URL}:${PORT}/auth/google` }>
         <button>Login</button>
       </a> }
     </div>
