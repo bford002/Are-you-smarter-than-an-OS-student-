@@ -10,7 +10,7 @@ const User = require('./db/models/user.model.js');
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://ec2-54-184-213-212.us-west-2.compute.amazonaws.com:3000/google/callback',
+  callbackURL: `${process.env.CLIENT_URL}:${process.env.PORT}/auth/google/callback`,
   passReqToCallback: true
 },
 (request, accessToken, refreshToken, profile, done) => {

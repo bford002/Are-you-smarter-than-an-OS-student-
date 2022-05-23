@@ -18,42 +18,13 @@ const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
-//app.use(express.static(CLIENT_PATH));
-
-const isLoggedIn = (req, res, next) => {
-  req.user ? next() : res.sendStatus(401);
-
-};
-
-app.get('/', (req, res) => {
-  res.send('<a href="/auth/google">Authenticate with Google</a>');
-});
-app.get('/protected', isLoggedIn, (req, res) => {
-  res.send(`Hello, ${req.user.name}!`);
-});
-app.get('/auth/google', 
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-);
-app.get('/google/callback', 
-  passport.authenticate('google', {
-    successRedirect: '/protected',
-    failureRedirect: '/auth/failure',
-  })
-);
-app.get('/auth/failure', (req, res) => {
-  res.send('something went wrong');
-});
-app.get('/logout', (req, res)=>{
-  const logUser = req.user.name;
-  req.logOut(()=>{
-    res.send(`Goodbye, ${logUser}!`);
-  });
-  //req.session.destroy();
-});
+app.use(express.static(CLIENT_PATH));
 
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 const HOST = '0.0.0.0';
 
