@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../App.css';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
+import Trivia from '../Pages/Trivia.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -42,7 +43,7 @@ export const App = () => {
       <div>
         <Routes>
           <Route path='/' element={<Home user={user} />} />
-
+          <Route path='/trivia' element={<Trivia user={user} />} />
 
         </Routes>
       </div>
