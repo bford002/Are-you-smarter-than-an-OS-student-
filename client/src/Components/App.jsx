@@ -41,7 +41,6 @@ export const App = () => {
     getUser();
   }, []);
   return (
-<<<<<<< HEAD
     <BrowserRouter>
       <div>
         <Routes>
@@ -51,17 +50,5 @@ export const App = () => {
         </Routes>
       </div>
     </BrowserRouter>
-=======
-    <div>
-      <Navbar user={user} />
-      <BrowserRouter>
-        <div>
-          <Routes>
-            <Route path='/' element={<Home user={user} />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </div>
->>>>>>> 0e46f3ffa6a6c4fdf6f9498986fc8e226465cf81
   );
 };
