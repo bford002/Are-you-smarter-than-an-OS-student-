@@ -7,11 +7,11 @@ const Home = ({ user }) => {
       <h1>Welcome, {user ? user.name : 'guest'}</h1>
 
       {user ? (
-        <a href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/logout`}>
+        <a href={`${CLIENT_URL}:${PORT}/auth/logout`}>
           <button>Logout</button>
         </a>
       ) : (
-        <a href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}>
+        <a href={`${CLIENT_URL}:${PORT}/auth/google`}>
           <button>Login</button>
         </a>
       )}
