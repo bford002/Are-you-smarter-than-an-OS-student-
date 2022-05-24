@@ -5,8 +5,10 @@ import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
 
+
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
+
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -38,6 +40,9 @@ export const App = () => {
     };
     getUser();
   }, []);
+
+
+
   return (
     <BrowserRouter>
       <div>
