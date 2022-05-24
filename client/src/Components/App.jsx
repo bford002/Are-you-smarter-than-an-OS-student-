@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
 import Home from '../Pages/Home.jsx';
+import { Navbar } from '../Components/NavBar.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -19,7 +22,7 @@ export const App = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Access-Control-Allow-Credentials': true,
-        }
+        },
       };
       axios(options)
         .then((res) => {
@@ -28,7 +31,7 @@ export const App = () => {
           }
         })
         .then((resObj) => {
-          console.log(resObj);
+          // console.log(resObj);
           setUser(resObj.data.user);
         })
         .catch((err) => {
@@ -38,14 +41,15 @@ export const App = () => {
     getUser();
   }, []);
   return (
-    <BrowserRouter>
-      <div>
-        <Routes>
-          <Route path='/' element={<Home user={user} />} />
-
-
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div>
+      <Navbar user={user} />
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route path='/' element={<Home user={user} />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 };

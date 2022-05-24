@@ -1,15 +1,71 @@
 import React from 'react';
 import axios from 'axios';
+import { AppBar, Toolbar } from '@material-ui/core';
+// import { Link } from "react-router-dom";
+import { Button, Typography, Link } from '@mui/material';
 
-export const App = () => {
-  const persons = [];
-  axios.get('/users')
-    .then((users)=>{
-      console.log(users.data);
-    });
+export const Navbar = ({ user }) => {
   return (
     <div>
-      <h1>We made it! { new Date().toString() }</h1>
+      <AppBar position='static'>
+        <Toolbar>
+          <Typography
+            className='navTitle'
+            sx={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '20px',
+              letterSpacing: '2px',
+              textDecoration: 'none',
+              boxShadow: 'none',
+            }}
+            component={Link}
+            href='/trivia'
+          >
+            Trivia
+          </Typography>
+          {user ? (
+            <div className='loginSuccess'>
+              <div className='userInfo'>
+                <Typography
+                  variant='h6'
+                  className='navUserName'
+                  sx={{ color: 'white', fontSize: '18px', marginRight: '10px' }}
+                >
+                  {user.username}
+                </Typography>
+                <img src={user.imageUrl} className='avatar' />
+              </div>
+              <Button
+                className='logoutButton'
+                sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                variant='text'
+                href='/leaderboard'
+              >
+                Leaderboard
+              </Button>
+              <Button
+                className='logoutButton'
+                sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                variant='text'
+                href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/logout`}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className='loginButton'
+              size='small'
+              sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+              variant='text'
+              href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}
+            >
+              Login
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
     </div>
   );
 };
