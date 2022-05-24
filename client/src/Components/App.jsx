@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import Home from '../Pages/Home.jsx';
 
-const CLIENT_URL = process.env.CLIENT_URL;
-const PORT = process.env.PORT;
+// const CLIENT_URL = process.env.CLIENT_URL;
+// const PORT = process.env.PORT;
 
 export const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     const getUser = () => {
       const options = {
-        url: `${CLIENT_URL}:${PORT}/auth/login/success`,
+        url: `${process.env.CLIENT_URL}:${process.env.PORT}/auth/login/success`,
         method: 'GET',
         withCredentials: true,
         headers: {
@@ -36,13 +38,14 @@ export const App = () => {
     getUser();
   }, []);
   return (
-    <div className='welcome'>
-      <h1>Welcome, { user ? user.name : 'guest' }</h1>
-      { user ? <a href={ `${CLIENT_URL}:${PORT}/auth/logout` }>
-        <button>Logout</button>
-      </a> : <a href={ `${CLIENT_URL}:${PORT}/auth/google` }>
-        <button>Login</button>
-      </a> }
-    </div>
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route path='/' element={<Home user={user} />} />
+
+
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
