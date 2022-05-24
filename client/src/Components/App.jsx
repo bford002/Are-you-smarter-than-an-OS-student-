@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom"
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
