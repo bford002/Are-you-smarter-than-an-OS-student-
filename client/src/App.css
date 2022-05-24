@@ -34,12 +34,7 @@ body {
 .navUserName {
   margin-right: 20px;
 }
-.logoutButton {
-  font-size: 20px;
-  font-weight: bold;
+
+.homeTitle {
+  text-align: center;
 }
-/* .loginButton {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-} */
