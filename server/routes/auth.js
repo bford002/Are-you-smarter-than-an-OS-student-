@@ -1,7 +1,8 @@
 const passport = require('passport');
 const router = require('express').Router();
 require('dotenv').config();
-const CLIENT_URL = `${process.env.CLIENT_URL}`; //${process.env.PORT}
+//uncomment for local testing. Remember to comment when pushing to main branch.
+const CLIENT_URL = `${process.env.CLIENT_URL}`; //:${process.env.PORT}`;
 
 router.get('/login/success', (req, res) => {
   if (req.user) {
@@ -20,7 +21,7 @@ router.get('/google',
 );
 router.get('/google/callback', 
   passport.authenticate('google', {
-    successRedirect: process.env.CLIENT_URL,
+    successRedirect: CLIENT_URL,
     failureRedirect: '/login/fail',
   })
 );

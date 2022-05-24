@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../App.css';
 
 const CLIENT_URL = process.env.CLIENT_URL;
 const PORT = process.env.PORT;
@@ -35,7 +36,7 @@ export const App = () => {
     getUser();
   }, []);
   return (
-    <div>
+    <div className='welcome'>
       <h1>Welcome, { user ? user.name : 'guest' }</h1>
       { user ? <a href={ `${CLIENT_URL}:${PORT}/auth/logout` }>
         <button>Logout</button>
