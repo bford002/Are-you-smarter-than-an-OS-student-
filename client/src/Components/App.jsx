@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Home from '../Pages/Home.jsx';
 import { Navbar } from '../Components/NavBar.jsx';
+import TriviaPage from '../Pages/Trivia.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -41,14 +42,16 @@ export const App = () => {
     getUser();
   }, []);
   return (
-    <BrowserRouter>
-      <div>
-        <Routes>
-          <Route path='/' element={<Home user={user} />} />
-          <Route path='/trivia' element={<Trivia user={user} />} />
-
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div>
+      <Navbar user={user} />
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route path='/' element={<Home user={user} />} />
+            <Route path='/trivia' element={<TriviaPage />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 };
