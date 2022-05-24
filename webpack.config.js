@@ -29,6 +29,7 @@ module.exports = {
       }
     ]
   },
+  
   plugins: [
     new htmlWebpackPlugin({template: './client/src/index.html'}),
     new dotenvWebpackPlugin({

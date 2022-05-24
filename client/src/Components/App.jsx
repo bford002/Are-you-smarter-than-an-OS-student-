@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-<<<<<<< HEAD
-import Leaderboard from './Leaderboard.jsx';
-=======
-import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom"
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
->>>>>>> 1704f2f4e2832907e87c65b70132ba410fdb5498
+import Leaderboard from '../Pages/Leaderboard.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -42,30 +39,14 @@ export const App = () => {
     getUser();
   }, []);
   return (
-<<<<<<< HEAD
-    <div>
-      <h1>Welcome, { user ? user.name : 'guest' }</h1>
-      { user ? <a href={ `${CLIENT_URL}:${PORT}/auth/logout` }>
-        <button>Logout</button>
-      </a> : <a href={ `${CLIENT_URL}:${PORT}/auth/google` }>
-        <button>Login</button>
-      </a> }
-      {
-        <div>
-          <Leaderboard />
-        </div>
-      }
-    </div>
-=======
     <BrowserRouter>
       <div>
         <Routes>
           <Route path='/' element={<Home user={user} />} />
-
+          <Route path='/leaderboard' element={<Leaderboard />} />
 
         </Routes>
       </div>
     </BrowserRouter>
->>>>>>> 1704f2f4e2832907e87c65b70132ba410fdb5498
   );
 };
