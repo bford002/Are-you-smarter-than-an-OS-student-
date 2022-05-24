@@ -1,21 +1,28 @@
 import React from 'react';
+import { Button } from '@mui/material';
 
-const CLIENT_URL = process.env.CLIENT_URL;
-const PORT = process.env.PORT;
-
-const Home = ({user}) => {
+const Home = ({ user }) => {
   return (
-    <div className='welcome'>
-      {console.log}
-      <h1>Welcome, { user ? user.name : 'guest' }</h1>
-
-      { user ?
-        <a href={ `${CLIENT_URL}:${PORT}/auth/logout` }>
-          <button>Logout</button>
-        </a> 
-        : <a href={ `${CLIENT_URL}:${PORT}/auth/google` }>
-          <button>Login</button>
-        </a> }
+    <div>
+      <h1 className='homeTitle'>Are you smarter than a OS Student?!</h1>
+      {user ? (
+        <Button
+          href='/trivia'
+          variant='contained'
+          sx={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
+        >
+          Click to play!
+        </Button>
+      ) : (
+        <Button
+          variant='contained'
+          href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}
+          sx={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
+        >
+          Login to play!
+        </Button>
+      )}
+      {console.log(user)}
     </div>
   );
 };
