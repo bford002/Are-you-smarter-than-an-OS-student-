@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
+import Leaderboard from '../Pages/Leaderboard.jsx';
+
+
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 import TriviaPage from '../Pages/Trivia.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
+
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -42,6 +44,9 @@ export const App = () => {
     };
     getUser();
   }, []);
+
+
+
   return (
     <div>
       <Navbar user={user} />
@@ -50,6 +55,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<Home user={user} />} />
             <Route path='/userprofile' element={<UserProfile user={user} />} />
+            <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/trivia' element={(user ? <TriviaPage /> : <Home user={user} />)} />
           </Routes>
         </div>
