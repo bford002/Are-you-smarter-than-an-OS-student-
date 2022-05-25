@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
+import Home from './Home.jsx';
 
 // TABLE MATERIALUI
-import { DataGrid } from '@mui/x-data-grid';
+import MaterialTable from '@material-table/core';
 
 
 
@@ -34,56 +35,64 @@ const Leaderboard = ({ user }) => {
     getAllUsers();
   }, [users]);
   
-  // console.log([users]);
+
+  const getOneUser = () => {
+    axios.get('/_id', {
+      '_id': user._id
+    })
+      .then((results) => {
+        console.log(results);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // getOneUser();
+
+  // /userprofile
 
 
-  
   const columns = [
-    { field: 'id', headerClassName: 'leaderboardHeader', headerName: 'Username', minWidth: 160, flex: 1 },
+    { field: 'id', 
+      headerClassName: 'leaderboardHeader', 
+      title: 'Username',  
+      render: rowData => <Link href={'http://localhost:3000/'}>{rowData.id}</Link>
+    },
     {
       headerClassName: 'leaderboardHeader',
       field: 'wins',
-      headerName: 'Wins',
-      type: 'number',
-      minWidth: 160,
-      editable: false,
-      flex: 1,
+      title: 'Wins',
+      type: 'numeric',
+      editable: 'never',
     },
     {
       headerClassName: 'leaderboardHeader',
       field: 'gamesPlayed',
-      headerName: 'Games Played',
-      type: 'number',
-      minWidth: 160,
-      editable: false,
-      flex: 1
+      title: 'Games Played',
+      type: 'numeric',
+      editable: 'never',
     },
     {
       headerClassName: 'leaderboardHeader',
       field: 'correctAnswers',
-      headerName: 'Correct Answers',
-      type: 'number',
+      title: 'Correct Answers',
+      type: 'numeric',
       sortable: true,
-      minWidth: 160,
-      flex: 1
     },
     {
       headerClassName: 'leaderboardHeader',
       field: 'questionsAttempted',
-      headerName: 'Questions Attempted',
-      type: 'number',
+      title: 'Questions Attempted',
+      type: 'numeric',
       sortable: true,
-      minWidth: 160,
-      flex: 1
     },
     {
       headerClassName: 'leaderboardHeader',
       field: 'percentCorrect',
-      headerName: 'Percent Correct',
-      type: 'number',
+      title: 'Percent Correct',
+      type: 'numeric',
       sortable: true,
-      minWidth: 160,
-      flex: 1
     }
   ];
   
@@ -101,31 +110,21 @@ const Leaderboard = ({ user }) => {
 
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ height: 900, minWidth: '100%' }}>
-        <DataGrid
-          sx={{ 
-            '.leaderboardHeader': {
-              color: 'white',
-              background: 'gray',
-            },
-            '.MuiDataGrid-row': {
-              color: 'white',
-              background: '#2b2b2b'
-            },
-            '&:hover': {
-              color: 'red',
-              backgroundColor: 'white',
-            },
-          }}
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableColumnMenu
-          disableSelectionOnClick
-        />
-      </div>
+    <div>
+      <MaterialTable
+        title='Trivia Leaderboard'
+        data={rows}
+        columns={columns}
+        options={{
+          paging: true,
+          pageSize: 20,
+          pageSizeOptions: [10, 20],
+          draggable: false,
+          showFirstLastPageButtons: false,
+          emptyRowsWhenPaging: false,
+          thirdSortClick: false,
+        }}
+      />
     </div>
   );
 };
