@@ -39,8 +39,12 @@ const Question = (question) => {
       </h1>
       {
         answers.map((answer, index) => {
-          return <div key={`answer${index}`} className='answer'>
-            <Button>
+          return <span key={`answer${index}`} className='answer' >
+            <Button onClick={(e) => {
+              answer === question.question.correct_answer ?
+                console.log(`${answer} is the correct answer the question: ${question.question.question}`) :
+                console.log(`${answer} is an incorrect answer to the question: ${question.question.question}`);
+            }}>
               { 
                 answer
                   .replace(/&#039;/g, '\'')
@@ -62,7 +66,7 @@ const Question = (question) => {
                   .replace(/&oacute;/g, 'ó') 
               }
             </Button>
-          </div>;
+          </span>;
         })
       }
     </div>

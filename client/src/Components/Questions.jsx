@@ -17,7 +17,7 @@ const Questions = () => {
   return (
     <div className='questions'>
       {
-        questions ? questions.map((question, index, collection)=>{
+        questions ? questions.map((question, index, collection) => {
           return <Question question = {question} key = {`q${index}`}/>;
         }) : 'Loading Questions...'
       }
