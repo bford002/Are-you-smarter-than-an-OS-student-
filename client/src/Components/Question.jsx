@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 const Question = (question) => {
   const answers = [];
   const [answered, setAnswered] = useState(false);
+  const [selection, setSelection] = useState(null);
   question.question.incorrect_answers.forEach((answer) => {
     answers.push(answer);
   });
@@ -38,6 +39,21 @@ const Question = (question) => {
             .replace(/&oacute;/g, 'ó')
         }
       </h1>
+      <h2 className='selection'>
+        {
+          selection ? 
+            <span className='correctAnswer'> 
+              { 
+                selection === question.question.correct_answer ?
+                  <div>{ `${ selection } is the correct answer!` }</div> :
+                  <div>{ `${ selection } is an incorrect answer! The answer was: ${question.question.correct_answer }.` }</div>  
+              } 
+            </span> : 
+            <span className='incorrectAnswer'>
+              Make your selection!
+            </span>
+        }
+      </h2>
       {
         answers.map((answer, index) => {
           return <span key={`answer${index}`} className='answer' >
@@ -45,10 +61,8 @@ const Question = (question) => {
               className ='answerButton' 
               onClick={
                 () => {
-                  answer === question.question.correct_answer ?
-                    console.log(`${answer} is the correct answer the question: ${question.question.question}`) :
-                    console.log(`${answer} is an incorrect answer to the question: ${question.question.question}`);
                   setAnswered(true);
+                  setSelection(answer);                  
                 }
               }
               variant='basic'

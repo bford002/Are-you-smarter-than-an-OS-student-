@@ -10,9 +10,20 @@
   border-radius: 10px;
 }
 .answer {
-  color: purple;
   padding: 10px;
-  
+}
+.selection {
+  color: white;
+  padding: 10px;
+}
+.correctAnswer {
+  color: white;
+  background: white;
+  border-radius: 10px;
+}
+.incorrectAnswer {
+  color: white;
+  border-radius: 10px;
 }
 body {
   margin: 0;
