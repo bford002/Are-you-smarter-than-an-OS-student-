@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 
 const Question = (question) => {
   const answers = [];
+  const [answered, setAnswered] = useState(false);
   question.question.incorrect_answers.forEach((answer) => {
     answers.push(answer);
   });
@@ -47,6 +48,7 @@ const Question = (question) => {
                   answer === question.question.correct_answer ?
                     console.log(`${answer} is the correct answer the question: ${question.question.question}`) :
                     console.log(`${answer} is an incorrect answer to the question: ${question.question.question}`);
+                  setAnswered(true);
                 }
               }
               variant='basic'
@@ -55,6 +57,7 @@ const Question = (question) => {
                 borderColor: 'white',
                 backgroundColor: 'darkBlue'
               }}
+              disabled={ answered }
             >
               { 
                 answer
