@@ -52,7 +52,7 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route path='/leaderboard' element={<Leaderboard />} />
+            <Route path='/leaderboard' element={<Leaderboard user={user} />} />
           </Routes>
         </div>
       </BrowserRouter>

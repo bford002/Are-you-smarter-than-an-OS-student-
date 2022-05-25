@@ -5,12 +5,11 @@ import '../App.css';
 
 // TABLE MATERIALUI
 import { DataGrid } from '@mui/x-data-grid';
-import { Typography } from '@mui/material';
 
 
 
 
-const Leaderboard = () => {
+const Leaderboard = ({ user }) => {
 
   // STATE
   const [users, setUsers] = useState([]);
@@ -48,7 +47,7 @@ const Leaderboard = () => {
       type: 'number',
       minWidth: 160,
       editable: false,
-      flex: 1
+      flex: 1,
     },
     {
       headerClassName: 'leaderboardHeader',
@@ -91,7 +90,7 @@ const Leaderboard = () => {
   const rows =
     users.map(user => {
       return { 
-        id: user.username, 
+        id: user.username,
         wins: user.wins,
         gamesPlayed: user.totalGames, 
         correctAnswers: user.qCorrect, 
@@ -102,31 +101,32 @@ const Leaderboard = () => {
 
 
   return (
-    <Typography>
-      <div style={{ display: 'flex' }}>
-        <div style={{ height: 900, minWidth: '100%' }}>
-          <DataGrid
-            sx={{ 
-              '.leaderboardHeader': {
-                color: 'white',
-                background: 'gray',
-                fontWeight: 'bold'
-              },
-              '.MuiDataGrid-row': {
-                color: 'white',
-                background: '#2b2b2b'
-              }
-            }}
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            disableColumnMenu
-            disableSelectionOnClick
-          />
-        </div>
+    <div style={{ display: 'flex' }}>
+      <div style={{ height: 900, minWidth: '100%' }}>
+        <DataGrid
+          sx={{ 
+            '.leaderboardHeader': {
+              color: 'white',
+              background: 'gray',
+            },
+            '.MuiDataGrid-row': {
+              color: 'white',
+              background: '#2b2b2b'
+            },
+            '&:hover': {
+              color: 'red',
+              backgroundColor: 'white',
+            },
+          }}
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableColumnMenu
+          disableSelectionOnClick
+        />
       </div>
-    </Typography>
+    </div>
   );
 };
 
