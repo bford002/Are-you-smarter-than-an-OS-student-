@@ -56,6 +56,7 @@ export const App = () => {
             <Route path='/' element={<Home user={user} />} />
             <Route path='/userprofile' element={<UserProfile user={user} />} />
             <Route path='/trivia' element={<TriviaPage />} />
+            <Route path='/leaderboard' element={<Leaderboard />} />
           </Routes>
         </div>
       </BrowserRouter>
