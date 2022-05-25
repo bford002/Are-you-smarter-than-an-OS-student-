@@ -40,11 +40,22 @@ const Question = (question) => {
       {
         answers.map((answer, index) => {
           return <span key={`answer${index}`} className='answer' >
-            <Button onClick={(e) => {
-              answer === question.question.correct_answer ?
-                console.log(`${answer} is the correct answer the question: ${question.question.question}`) :
-                console.log(`${answer} is an incorrect answer to the question: ${question.question.question}`);
-            }}>
+            <Button 
+              className ='answerButton' 
+              onClick={
+                () => {
+                  answer === question.question.correct_answer ?
+                    console.log(`${answer} is the correct answer the question: ${question.question.question}`) :
+                    console.log(`${answer} is an incorrect answer to the question: ${question.question.question}`);
+                }
+              }
+              variant='basic'
+              sx={{ 
+                color: 'white', 
+                borderColor: 'white',
+                backgroundColor: 'darkBlue'
+              }}
+            >
               { 
                 answer
                   .replace(/&#039;/g, '\'')
