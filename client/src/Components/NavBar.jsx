@@ -30,7 +30,15 @@ export const Navbar = ({ user }) => {
                 <Typography
                   variant='h6'
                   className='navUserName'
-                  sx={{ color: 'white', fontSize: '18px', marginRight: '10px' }}
+                  sx={{
+                    color: 'white',
+                    fontSize: '18px',
+                    marginRight: '10px',
+                    textDecoration: 'none',
+                    boxShadow: 'none',
+                  }}
+                  component={Link}
+                  href='/userprofile'
                 >
                   {user.username}
                 </Typography>
