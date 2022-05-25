@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Home from '../Pages/Home.jsx';
 import { Navbar } from '../Components/NavBar.jsx';
+import UserProfile from '../Pages/UserProfile.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -47,6 +48,7 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
+            <Route path='/userprofile' element={<UserProfile user={user} />} />
           </Routes>
         </div>
       </BrowserRouter>
