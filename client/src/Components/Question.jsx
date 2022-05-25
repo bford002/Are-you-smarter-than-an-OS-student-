@@ -15,7 +15,7 @@ const Question = (question) => {
   }
   return (
     <div>
-      <h1>
+      <h1 className='question'>
         {
           question.question.question
             .replace(/&#039;/g, '\'')
@@ -39,7 +39,7 @@ const Question = (question) => {
       </h1>
       {
         answers.map((answer, index) => {
-          return <div key={`answer${index}`}>
+          return <div key={`answer${index}`} className='answer'>
             <Button>
               { 
                 answer
