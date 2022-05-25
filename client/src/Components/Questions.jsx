@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Question from './Question.jsx';
 
-
-
-
 const Questions = () => {
   const [questions, setQuestions] = useState(null);
   useEffect(() => {
@@ -16,7 +13,6 @@ const Questions = () => {
     };
     getQuestions();
   }, []);
-  
   
   return (
     <div className='questions'>

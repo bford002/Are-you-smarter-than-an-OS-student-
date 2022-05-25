@@ -17,12 +17,52 @@ const Question = (question) => {
     <div>
       <h1>
         {
-          question.question.question.replace(/&#039;/g, '\'').replace(/&quot;/g, '"').replace(/&rsquo;/g, '\'').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&hellip;/g, '...').replace(/&shy;/g, '-').replace(/&Eacute;/g, 'É').replace(/&eacute;/g, 'é').replace(/&amp;/g, '&').replace(/&iacute;/g, 'í').replace(/&Iacute;/g, 'Í').replace(/&aacute;/g, 'á').replace(/&Aacute;/g, 'Á').replace(/&lrm/g, '').replace(/&Oacute;/g, 'Ó').replace(/&oacute;/g, 'ó')
+          question.question.question
+            .replace(/&#039;/g, '\'')
+            .replace(/&quot;/g, '"')
+            .replace(/&rsquo;/g, '\'')
+            .replace(/&rdquo;/g, '\"')
+            .replace(/&ldquo;/g, '\"')
+            .replace(/&hellip;/g, '...')
+            .replace(/&shy;/g, '-')
+            .replace(/&Eacute;/g, 'É')
+            .replace(/&eacute;/g, 'é')
+            .replace(/&amp;/g, '&')
+            .replace(/&iacute;/g, 'í')
+            .replace(/&Iacute;/g, 'Í')
+            .replace(/&aacute;/g, 'á')
+            .replace(/&Aacute;/g, 'Á')
+            .replace(/&lrm/g, '')
+            .replace(/&Oacute;/g, 'Ó')
+            .replace(/&oacute;/g, 'ó')
         }
       </h1>
       {
         answers.map((answer, index) => {
-          return <div key={`answer${index}`}><Button>{ answer.replace(/&#039;/g, '\'').replace(/&quot;/g, '"').replace(/&rsquo;/g, '\'').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&hellip;/g, '...').replace(/&shy;/g, '-').replace(/&Eacute;/g, 'É').replace(/&eacute;/g, 'é').replace(/&amp;/g, '&').replace(/&iacute;/g, 'í').replace(/&Iacute;/g, 'Í').replace(/&aacute;/g, 'á').replace(/&Aacute;/g, 'Á').replace(/&lrm/g, '').replace(/&Oacute;/g, 'Ó').replace(/&oacute;/g, 'ó') }</Button></div>;
+          return <div key={`answer${index}`}>
+            <Button>
+              { 
+                answer
+                  .replace(/&#039;/g, '\'')
+                  .replace(/&quot;/g, '"')
+                  .replace(/&rsquo;/g, '\'')
+                  .replace(/&rdquo;/g, '\"')
+                  .replace(/&ldquo;/g, '\"')
+                  .replace(/&hellip;/g, '...')
+                  .replace(/&shy;/g, '-')
+                  .replace(/&Eacute;/g, 'É')
+                  .replace(/&eacute;/g, 'é')
+                  .replace(/&amp;/g, '&')
+                  .replace(/&iacute;/g, 'í')
+                  .replace(/&Iacute;/g, 'Í')
+                  .replace(/&aacute;/g, 'á')
+                  .replace(/&Aacute;/g, 'Á')
+                  .replace(/&lrm/g, '')
+                  .replace(/&Oacute;/g, 'Ó')
+                  .replace(/&oacute;/g, 'ó') 
+              }
+            </Button>
+          </div>;
         })
       }
     </div>
