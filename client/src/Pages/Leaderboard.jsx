@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import axios from 'axios';
+import '../App.css';
 
 // TABLE MATERIALUI
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { DataGrid } from '@mui/x-data-grid';
+import { Typography } from '@mui/material';
 
-import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#3f51b5',
-    },
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
 
 
 const Leaderboard = () => {
@@ -36,7 +21,9 @@ const Leaderboard = () => {
         // console.log(results.data);
         // const [users, setUsers] = useState(results.data);
         //SET STATE
-        setUsers(results.data);
+        setUsers(results.data.sort((a, b) => {
+          return b.wins - a.wins;
+        }));
       })
       .catch((err) => {
         console.error(err);
@@ -51,40 +38,95 @@ const Leaderboard = () => {
   // console.log([users]);
 
 
+  
+  const columns = [
+    { field: 'id', headerClassName: 'leaderboardHeader', headerName: 'Username', minWidth: 160, flex: 1 },
+    {
+      headerClassName: 'leaderboardHeader',
+      field: 'wins',
+      headerName: 'Wins',
+      type: 'number',
+      minWidth: 160,
+      editable: false,
+      flex: 1
+    },
+    {
+      headerClassName: 'leaderboardHeader',
+      field: 'gamesPlayed',
+      headerName: 'Games Played',
+      type: 'number',
+      minWidth: 160,
+      editable: false,
+      flex: 1
+    },
+    {
+      headerClassName: 'leaderboardHeader',
+      field: 'correctAnswers',
+      headerName: 'Correct Answers',
+      type: 'number',
+      sortable: true,
+      minWidth: 160,
+      flex: 1
+    },
+    {
+      headerClassName: 'leaderboardHeader',
+      field: 'questionsAttempted',
+      headerName: 'Questions Attempted',
+      type: 'number',
+      sortable: true,
+      minWidth: 160,
+      flex: 1
+    },
+    {
+      headerClassName: 'leaderboardHeader',
+      field: 'percentCorrect',
+      headerName: 'Percent Correct',
+      type: 'number',
+      sortable: true,
+      minWidth: 160,
+      flex: 1
+    }
+  ];
+  
+  const rows =
+    users.map(user => {
+      return { 
+        id: user.username, 
+        wins: user.wins,
+        gamesPlayed: user.totalGames, 
+        correctAnswers: user.qCorrect, 
+        questionsAttempted: user.qAttempted,
+        percentCorrect: user.qAttempted === 0 ? '-' : user.qCorrect / user.qAttempted * 100 + '%'
+      };
+    });
+
 
   return (
-    <TableContainer component={Paper} theme={theme}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead
-        >
-          <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell align="right">Wins</TableCell>
-            <TableCell align="right">Games Played</TableCell>
-            <TableCell align="right">Correct Answers</TableCell>
-            <TableCell align="right">Questions Attmepted</TableCell>
-            <TableCell align="right">Percent Correct</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow
-              key={user.username}
-              sx={{ border: 2 }}
-            >
-              <TableCell component="th" scope="row">
-                {user.username}
-              </TableCell>
-              <TableCell align="right">{user.wins}</TableCell>
-              <TableCell align="right">{user.totalGames}</TableCell>
-              <TableCell align="right">{user.qCorrect}</TableCell>
-              <TableCell align="right">{user.qAttempted}</TableCell>
-              <TableCell align="right" defaultValue={0}>{user.qAttempted === 0 ? '-' : user.qCorrect / user.qAttempted * 100 + '%'}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Typography>
+      <div style={{ display: 'flex' }}>
+        <div style={{ height: 900, minWidth: '100%' }}>
+          <DataGrid
+            sx={{ 
+              '.leaderboardHeader': {
+                color: 'white',
+                background: 'gray',
+                fontWeight: 'bold'
+              },
+              '.MuiDataGrid-row': {
+                color: 'white',
+                background: '#2b2b2b'
+              }
+            }}
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableColumnMenu
+            disableSelectionOnClick
+          />
+        </div>
+      </div>
+    </Typography>
   );
 };
 
