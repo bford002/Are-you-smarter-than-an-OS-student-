@@ -7,6 +7,8 @@ import Leaderboard from '../Pages/Leaderboard.jsx';
 
 
 import { Navbar } from '../Components/NavBar.jsx';
+import UserProfile from '../Pages/UserProfile.jsx';
+import TriviaPage from '../Pages/Trivia.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -52,7 +54,8 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route path='/leaderboard' element={<Leaderboard />} />
+            <Route path='/userprofile' element={<UserProfile user={user} />} />
+            <Route path='/trivia' element={<TriviaPage />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -1,10 +1,33 @@
 const router = require('express').Router();
 const User = require('../db/models/user.model.js');
 
-router.route('/').get((req, res)=>{
+router.route('/').get((req, res) => {
   User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then((users) => res.json(users))
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+
+router.get('/:_id', (req, res) => {
+  console.log(req.body);
+  const _id = req.params._id;
+  User.find({ _id: _id })
+    .then((results) => {
+      if (results.length === 0) {
+        res.sendStatus(404);
+      } else {
+        res.status(200).send(results);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+router.patch('/update/:_id', (req, res) => {
+  console.log(req.body);
+  const _id = req.params._id;
+  User.updateOne({ _id: _id }, req.body);
 });
 
 module.exports = router;

@@ -1,7 +1,12 @@
 .welcome {
   color: red;
 }
-
+.question {
+  color: blue
+}
+.answer {
+  color: purple
+}
 body {
   margin: 0;
 }
@@ -36,5 +41,15 @@ body {
 }
 
 .homeTitle {
+  text-align: center;
+}
+
+.profileName {
+  text-align: center;
+}
+.profileAvatar {
+  text-align: center;
+}
+.profileStats {
   text-align: center;
 }
