@@ -4,8 +4,8 @@ import axios from 'axios';
 export const App = () => {
   const persons = [];
   axios.get('/users')
-    .then((users)=>{
-      console.log(users.data);
+    .then(()=>{
+      //do stuff here
     });
   return (
     <div>

@@ -4,11 +4,9 @@ import '../App.css';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
-
-
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
-import TriviaPage from '../Pages/Trivia.jsx';
+import TriviaPage from '../Pages/TriviaPage.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -35,7 +33,6 @@ export const App = () => {
           }
         })
         .then((resObj) => {
-          // console.log(resObj);
           setUser(resObj.data.user);
         })
         .catch((err) => {
@@ -56,7 +53,7 @@ export const App = () => {
             <Route path='/' element={<Home user={user} />} />
             <Route path='/userprofile' element={<UserProfile user={user} />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
-            <Route path='/trivia' element={(user ? <TriviaPage /> : <Home user={user} />)} />
+            <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
           </Routes>
         </div>
       </BrowserRouter>
