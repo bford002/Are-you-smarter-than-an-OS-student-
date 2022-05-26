@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
 import { Navbar } from '../Components/NavBar.jsx';
@@ -10,7 +10,6 @@ import TriviaPage from '../Pages/TriviaPage.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
-
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -34,7 +33,16 @@ export const App = () => {
           }
         })
         .then((resObj) => {
-          setUser(resObj.data.user);
+          const _id = resObj.data.user._id;
+          return _id;
+        })
+        .then((_id) => {
+          axios
+            .get(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${_id}`)
+            .then((results) => {
+              // console.log(results.data[0]);
+              setUser(results.data[0]);
+            });
         })
         .then(() => console.log(user))
         .catch((err) => {
@@ -43,8 +51,6 @@ export const App = () => {
     };
     getUser();
   }, []);
-
-
 
   return (
     <div>
@@ -59,7 +65,16 @@ export const App = () => {
             />
 
             <Route path='/leaderboard' element={<Leaderboard />} />
-            <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
+            <Route
+              path='/trivia'
+              element={
+                user ? (
+                  <TriviaPage user={user} setUser={setUser} />
+                ) : (
+                  <Home user={user} />
+                )
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>

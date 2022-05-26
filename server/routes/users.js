@@ -25,15 +25,13 @@ router.get('/:_id', (req, res) => {
 
 router.patch('/:_id', (req, res) => {
   const _id = req.params._id;
-  //console.log(req.body);
-  User.updateOne({ _id: _id }, req.body)
-    .then(() => {
-      User.find({ _id: _id })
-        .then((results) => {
-          //console.log(results);
-          res.status(200).send(results);
-        });
+  console.log(req.body);
+  User.updateOne({ _id: _id }, req.body).then(() => {
+    User.find({ _id: _id }).then((results) => {
+      console.log(results);
+      res.status(200).send(results);
     });
+  });
 });
 
 module.exports = router;
