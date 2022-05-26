@@ -74,7 +74,7 @@ export const App = () => {
 
         {
           users.map(user => {
-            return <Link to={'/profile/' + user._id} />;
+            return <Link to={'/profile/' + user._id} key={user._id} />;
           })
         }
 

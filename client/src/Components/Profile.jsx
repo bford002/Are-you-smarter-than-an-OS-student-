@@ -29,7 +29,7 @@ const Profile = ({ users }) => {
 
   return (
     <div>
-      <UserProfile />
+      <UserProfile user={user} />
     </div>
   );
 };
