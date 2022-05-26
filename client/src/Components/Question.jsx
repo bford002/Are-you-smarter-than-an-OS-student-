@@ -65,7 +65,7 @@ const Question = ({user, setUser, question}) => {
             <Button 
               className ='answerButton' 
               onClick={
-                (e) => {
+                () => {
                   setAnswered(true);
                   setSelection(answer);
                   answer === question.correct_answer ?            

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Questions from '../Components/Questions.jsx';
+import axios from 'axios';
 
 
 const TriviaPage = ({user, setUser}) => {
