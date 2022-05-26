@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import App from './App.jsx';
+import UserProfile from '../Pages/UserProfile.jsx';
 
-export const App = () => {
-  const persons = [];
-  axios.get('/users')
-    .then((users)=>{
-      console.log(users.data);
-    });
+const Profile = ({ users }) => {
+
+  const [user, setUser] = useState({});
+
+  const params = useParams();
+
+
+  const getOneUser = (() => {
+    axios.get(`/users/${params._id}`)
+      .then((results) => {
+        console.log(results.data, 'RESULTS');
+        setUser(results.data[0]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+
+  useEffect(() => {
+    getOneUser();
+  }, []);
+
+
   return (
     <div>
-      <h1>We made it! { new Date().toString() }</h1>
+      <UserProfile />
     </div>
   );
 };
+
+export default Profile;
