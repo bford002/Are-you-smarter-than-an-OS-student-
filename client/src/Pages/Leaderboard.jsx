@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import { Link } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
-import Home from './Home.jsx';
 
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
@@ -10,54 +10,14 @@ import MaterialTable from '@material-table/core';
 
 
 
-const Leaderboard = ({ user }) => {
-
-  // STATE
-  const [users, setUsers] = useState([]);
-
-  const getAllUsers = () => {
-    axios.get('/users')
-      .then((results) => {
-        // console.log(results.data);
-        // const [users, setUsers] = useState(results.data);
-        //SET STATE
-        setUsers(results.data.sort((a, b) => {
-          return b.wins - a.wins;
-        }));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-    
-  // ON RENDER
-  useEffect(() => {
-    getAllUsers();
-  }, [users]);
-  
-
-  const getOneUser = () => {
-    axios.get('/_id', {
-      '_id': user._id
-    })
-      .then((results) => {
-        console.log(results);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  // getOneUser();
-
-  // /userprofile
+const Leaderboard = ({ user, users }) => {
 
 
   const columns = [
     { field: 'id', 
       headerClassName: 'leaderboardHeader', 
       title: 'Username',  
-      render: rowData => <Link href={'http://localhost:3000/'}>{rowData.id}</Link>
+      render: rowData => <Link href={`/profile/${rowData.id[0].key}`}>{rowData.id}</Link>
     },
     {
       headerClassName: 'leaderboardHeader',
@@ -98,8 +58,8 @@ const Leaderboard = ({ user }) => {
   
   const rows =
     users.map(user => {
-      return { 
-        id: user.username,
+      return {
+        id: [<img src={user.imageUrl} className='avatar' key={user._id} />, user.username],
         wins: user.wins,
         gamesPlayed: user.totalGames, 
         correctAnswers: user.qCorrect, 
@@ -117,8 +77,8 @@ const Leaderboard = ({ user }) => {
         columns={columns}
         options={{
           paging: true,
-          pageSize: 20,
-          pageSizeOptions: [10, 20],
+          pageSize: 10,
+          pageSizeOptions: [5, 10, 20],
           draggable: false,
           showFirstLastPageButtons: false,
           emptyRowsWhenPaging: false,
