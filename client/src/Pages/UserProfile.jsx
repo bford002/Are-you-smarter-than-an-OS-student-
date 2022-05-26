@@ -42,7 +42,7 @@ const UserProfile = ({ user }) => {
           'Loading...'
         )}
       </h1>
-      {console.log(user)}
+      //{console.log(user)}
     </div>
   );
 };

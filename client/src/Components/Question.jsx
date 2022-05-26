@@ -4,7 +4,6 @@ import { Button } from '@mui/material';
 
 const Question = ({user, setUser, question}) => {
   const answers = [];
-  const [correct, setCorrect] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [selection, setSelection] = useState(null);
   question.incorrect_answers.forEach((answer) => {
