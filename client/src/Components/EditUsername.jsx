@@ -10,13 +10,13 @@ const EditUsername = ({ user, getUser }) => {
   const [newUserName, setNewUserName] = useState('');
 
   const buttonClick = () => {
-    console.log('click');
+    // console.log('click');
     setDisplayButton(!displayButton);
     setDisplayForm(!displayForm);
   };
 
   const onSubmit = () => {
-    console.log('submitted');
+    // console.log('submitted');
     axios
       .patch(
         `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
@@ -34,7 +34,7 @@ const EditUsername = ({ user, getUser }) => {
       .catch((err) => console.error(err, 'onSubmit EditUsername'));
   };
   const inputChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setNewUserName(e.target.value);
   };
 

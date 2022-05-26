@@ -41,7 +41,7 @@ const UserProfile = ({ user, getUser }) => {
               <div
                 className='overlayBox'
                 onClick={() => {
-                  console.log('click');
+                  // console.log('click');
                   setDisplayEditImage(!displayEditImage);
                 }}
                 style={{ marginLeft: '21%' }}
@@ -99,7 +99,7 @@ const UserProfile = ({ user, getUser }) => {
           )}
         </h1>
       </div>
-      {console.log(user)}
+      {/* {console.log(user)} */}
     </div>
   );
 };

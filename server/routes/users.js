@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 });
 
 router.get('/:_id', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const _id = req.params._id;
   User.find({ _id: _id })
     .then((results) => {
@@ -26,7 +26,7 @@ router.get('/:_id', (req, res) => {
 
 router.patch('/:_id', (req, res) => {
   const _id = req.params._id;
-  console.log(req.body);
+  // console.log(req.body);
   User.updateOne({ _id: _id }, req.body).then(() => {
     User.find({ _id: _id }).then((results) => {
       // console.log(results);

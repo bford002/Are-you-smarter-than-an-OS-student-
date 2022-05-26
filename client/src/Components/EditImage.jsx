@@ -12,7 +12,6 @@ const EditImage = ({
 }) => {
   const [newImg, setNewImg] = useState('');
   const [newImgCloud, setNewImgCloud] = useState('');
-  // const [widgetRes, setWidgetRes] = useState(null);
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState('');
 
@@ -23,24 +22,13 @@ const EditImage = ({
     },
     (error, result) => {
       if (result.event === 'success') {
-        // setWidgetRes(result);
         setNewImgCloud(result.info.url);
       }
-      // checkUploadResult(result);
     }
   );
 
   const showWidget = () => {
     widget.open();
-  };
-  // if event == success mean image uploaded
-  // if event == abort means they pressed done on upload
-  const checkUploadResult = (resultEvent) => {
-    if (resultEvent && resultEvent.event === 'success') {
-      console.log(resultEvent.info.url);
-      setNewImg(resultEvent.info.url);
-      // cb();
-    }
   };
 
   useEffect(() => {
@@ -63,7 +51,7 @@ const EditImage = ({
   }, [newImgCloud]);
 
   const onSubmit = () => {
-    console.log('submitted');
+    // console.log('submitted');
     const isImage = (url) => {
       if (typeof url !== 'string') {
         return false;
@@ -74,7 +62,7 @@ const EditImage = ({
       );
     };
 
-    console.log(isImage(newImg));
+    // console.log(isImage(newImg));
 
     if (isImage(newImg)) {
       axios
@@ -97,10 +85,6 @@ const EditImage = ({
       setHelperText('Invalid URL.');
     }
   };
-  const tester = () => {
-    console.log(newImg);
-  };
-
   const inputChange = (e) => {
     setNewImg(e.target.value);
   };

@@ -5,7 +5,7 @@ export const App = () => {
   const persons = [];
   axios.get('/users')
     .then((users)=>{
-      console.log(users.data);
+      // console.log(users.data);
     });
   return (
     <div>
