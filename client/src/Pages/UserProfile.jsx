@@ -5,11 +5,11 @@ import EditImage from '../Components/EditImage.jsx';
 import { Typography, Toolbar, Box } from '@mui/material';
 
 // do axios request to patch a user when they click certain buttons
-//send along whatever you need
+// send along whatever you need
 // get user again to update info
 // patch should always send an object where {thingtochange: changed info}
 // seperate username and avatar to diffrent sides of screen
-//make avatar clickable to then show a component that allows you to change your avatar
+// make avatar clickable to then show a component that allows you to change your avatar
 // add edit button to side of username, when clicked do show component
 
 const UserProfile = ({ user, getUser }) => {

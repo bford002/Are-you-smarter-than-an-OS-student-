@@ -6,6 +6,28 @@
 }
 .answer {
   color: purple;
+  color: white;
+  padding: 20px;
+}
+.Question {
+  background-color: rgb(63, 81, 181);
+  border-radius: 10px;
+}
+.answer {
+  padding: 10px;
+}
+.selection {
+  color: white;
+  padding: 10px;
+}
+.correctAnswer {
+  color: white;
+  background: white;
+  border-radius: 10px;
+}
+.incorrectAnswer {
+  color: white;
+  border-radius: 10px;
 }
 body {
   margin: 0;

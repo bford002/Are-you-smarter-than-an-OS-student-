@@ -8,7 +8,6 @@ router.route('/').get((req, res) => {
 });
 
 router.get('/:_id', (req, res) => {
-  // console.log(req.body);
   const _id = req.params._id;
   User.find({ _id: _id })
     .then((results) => {
@@ -19,20 +18,22 @@ router.get('/:_id', (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });
 
 router.patch('/:_id', (req, res) => {
   const _id = req.params._id;
-  // console.log(req.body);
-  User.updateOne({ _id: _id }, req.body).then(() => {
-    User.find({ _id: _id }).then((results) => {
-      // console.log(results);
-      res.status(200).send(results);
+  //console.log(req.body);
+  User.updateOne({ _id: _id }, req.body)
+    .then(() => {
+      User.find({ _id: _id })
+        .then((results) => {
+          //console.log(results);
+          res.status(200).send(results);
+        });
     });
-  });
 });
 
 module.exports = router;
