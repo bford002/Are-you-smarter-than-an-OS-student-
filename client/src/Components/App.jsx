@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
+import Profile from './Profile.jsx';
+
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 import TriviaPage from '../Pages/TriviaPage.jsx';
@@ -49,22 +51,56 @@ export const App = () => {
           console.error(err, 'something went wrong');
         });
     };
-    getUser();
+    getUser(), getAllUsers();
   }, []);
+
+  const [users, setUsers] = useState([]);
+
+  const getAllUsers = () => {
+    axios
+      .get('/users')
+      .then((results) => {
+        // console.log(results.data);
+        // const [users, setUsers] = useState(results.data);
+        //SET STATE
+        setUsers(
+          results.data.sort((a, b) => {
+            return b.wins - a.wins;
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <div>
       <Navbar user={user} />
       <BrowserRouter>
+        {users.map((user) => {
+          return <Link to={'/profile/' + user._id} key={user._id} />;
+        })}
+
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
+            <Route
+              path='/leaderboard'
+              element={
+                user ? <Leaderboard users={users} /> : <Home user={user} />
+              }
+            />
+
+            <Route
+              path='/profile/:_id'
+              element={user ? <Profile users={users} /> : <Home user={user} />}
+            />
             <Route
               path='/userprofile'
               element={<UserProfile user={user} getUser={setUser} />}
             />
 
-            <Route path='/leaderboard' element={<Leaderboard />} />
             <Route
               path='/trivia'
               element={
