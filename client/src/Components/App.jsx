@@ -14,8 +14,9 @@ import TriviaPage from '../Pages/TriviaPage.jsx';
 
 export const App = () => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
-    const getUser = () => {
+    const getUser = async () => {
       const options = {
         url: `${process.env.CLIENT_URL}:${process.env.PORT}/auth/login/success`,
         method: 'GET',
@@ -26,7 +27,7 @@ export const App = () => {
           'Access-Control-Allow-Credentials': true,
         },
       };
-      axios(options)
+      await axios(options)
         .then((res) => {
           if (res.status === 200) {
             return res;
@@ -35,6 +36,7 @@ export const App = () => {
         .then((resObj) => {
           setUser(resObj.data.user);
         })
+        .then(() => console.log(user))
         .catch((err) => {
           console.error(err, 'something went wrong');
         });
@@ -51,7 +53,11 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route path='/userprofile' element={<UserProfile user={user} />} />
+            <Route
+              path='/userprofile'
+              element={<UserProfile user={user} getUser={setUser} />}
+            />
+
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
           </Routes>
