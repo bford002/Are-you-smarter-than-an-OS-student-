@@ -69,14 +69,14 @@ const Question = ({user, setUser, question}) => {
                   setAnswered(true);
                   setSelection(answer);
                   answer === question.correct_answer ?            
-                    axios.patch(`/users/${user._id}`, {
+                    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
                       qAttempted: user.qAttempted + 1,
                       qCorrect: user.qCorrect + 1
                     })
                       .then((user)=>{
                         setUser(user.data[0]);
                       }) :
-                    axios.patch(`/users/${user._id}`, {
+                    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
                       qAttempted: user.qAttempted + 1,
                     })
                       .then((user)=>{
