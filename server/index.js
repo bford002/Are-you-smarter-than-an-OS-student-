@@ -6,8 +6,6 @@ const { connection } = require('./db/index');
 const passport = require('passport');
 require('./auth');
 
-//console.log(connection);
-
 const app = express();
 app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
@@ -50,7 +48,7 @@ connection
   .then(() => {
     app.listen(PORT, HOST, (err) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
       console.log('Server listening on PORT', PORT);
     });

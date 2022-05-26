@@ -2,11 +2,11 @@ import React from 'react';
 import Questions from '../Components/Questions.jsx';
 
 
-const TriviaPage = () => {
+const TriviaPage = ({user, setUser}) => {
   return (
     <div className='welcome'>
       <h1>Here are your questions:</h1>
-      <Questions />
+      <Questions user = {user} setUser={setUser}/>
     </div>
   );
 };

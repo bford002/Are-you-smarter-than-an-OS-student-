@@ -22,7 +22,6 @@ const Home = ({ user }) => {
           Login to play!
         </Button>
       )}
-      {console.log(user)}
     </div>
   );
 };
