@@ -9,7 +9,7 @@ import Profile from './Profile.jsx';
 
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
-import TriviaPage from '../Pages/Trivia.jsx';
+import TriviaPage from '../Pages/TriviaPage.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
@@ -17,8 +17,9 @@ import TriviaPage from '../Pages/Trivia.jsx';
 
 export const App = () => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
-    const getUser = () => {
+    const getUser = async () => {
       const options = {
         url: `${process.env.CLIENT_URL}:${process.env.PORT}/auth/login/success`,
         method: 'GET',
@@ -29,16 +30,16 @@ export const App = () => {
           'Access-Control-Allow-Credentials': true,
         },
       };
-      axios(options)
+      await axios(options)
         .then((res) => {
           if (res.status === 200) {
             return res;
           }
         })
         .then((resObj) => {
-          // console.log(resObj);
           setUser(resObj.data.user);
         })
+        .then(() => console.log(user))
         .catch((err) => {
           console.error(err, 'something went wrong');
         });
@@ -85,6 +86,13 @@ export const App = () => {
             <Route path='/leaderboard' element={(user ? <Leaderboard users={users} /> : <Home user={user} />)} />
             <Route path='/trivia' element={(user ? <TriviaPage /> : <Home user={user} />)} />
             <Route path='/profile/:_id' element={(user ? <Profile users={users} /> : <Home user={user} />)} />
+            <Route
+              path='/userprofile'
+              element={<UserProfile user={user} getUser={setUser} />}
+            />
+
+            <Route path='/leaderboard' element={<Leaderboard />} />
+            <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
           </Routes>
         </div>
       </BrowserRouter>

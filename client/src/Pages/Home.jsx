@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 const Home = ({ user }) => {
   return (
     <div>
-      <h1 className='homeTitle'>Are you smarter than a OS Student?!</h1>
+      <h1 className='homeTitle'>Are you smarter than an OS Student?!</h1>
       {user ? (
         <Button
           href='/trivia'
@@ -22,7 +22,6 @@ const Home = ({ user }) => {
           Login to play!
         </Button>
       )}
-      {console.log(user)}
     </div>
   );
 };
