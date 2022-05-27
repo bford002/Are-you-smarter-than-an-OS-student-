@@ -30,7 +30,19 @@ const Questions = ({user, setUser}) => {
       {
         questions ? 
           questions.map((question, index) => {
-            return <div className='Question'><Question setCorrectAnswers = {setCorrectAnswers} correctAnswers = {correctAnswers} setUser={setUser} user = {user} question = {question} key = {`q${index}`} totalQs={questions.length} attemptedQs={attemptedQs} setAttemptedQs={setAttemptedQs}/></div>;
+            return <div className='Question'>
+              <Question 
+                qIndex = {index} 
+                setCorrectAnswers = {setCorrectAnswers} 
+                correctAnswers = {correctAnswers} 
+                setUser={setUser} 
+                user = {user} 
+                question = {question} 
+                key = {`qList${index}`} 
+                totalQs={questions.length} 
+                attemptedQs={attemptedQs} 
+                setAttemptedQs={setAttemptedQs}/>
+            </div>;
           }) : 
           'Loading Questions...'
       }
