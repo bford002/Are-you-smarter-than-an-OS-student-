@@ -5,14 +5,13 @@ import App from './App.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 
 const Profile = ({ users }) => {
-
   const [user, setUser] = useState({});
 
   const params = useParams();
 
-
-  const getOneUser = (() => {
-    axios.get(`/users/${params._id}`)
+  const getOneUser = () => {
+    axios
+      .get(`/users/${params._id}`)
       .then((results) => {
         // console.log(results.data, 'RESULTS');
         setUser(results.data[0]);
@@ -20,16 +19,15 @@ const Profile = ({ users }) => {
       .catch((err) => {
         console.error(err);
       });
-  });
+  };
 
   useEffect(() => {
     getOneUser();
   }, []);
 
-
   return (
     <div>
-      <UserProfile user={user} />
+      <UserProfile user={user} editable={false} />
     </div>
   );
 };

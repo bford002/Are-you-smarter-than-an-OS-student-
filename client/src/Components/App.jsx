@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
 import Profile from './Profile.jsx';
+import Custom from '../Pages/Custom.jsx';
+import Daily from '../Pages/Daily.jsx';
 
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
@@ -15,6 +17,7 @@ import TriviaPage from '../Pages/TriviaPage.jsx';
 
 export const App = () => {
   const [user, setUser] = useState(null);
+  const [customLink, setCustomLink] = useState(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -46,13 +49,15 @@ export const App = () => {
               setUser(results.data[0]);
             });
         })
-        .then(() => console.log(user))
+        .then(() => {
+          // console.log(user)
+        })
         .catch((err) => {
           console.error(err, 'something went wrong');
         });
     };
     getUser(), getAllUsers();
-  }, []);
+  }, [customLink]);
 
   const [users, setUsers] = useState([]);
 
@@ -84,14 +89,39 @@ export const App = () => {
 
         <div>
           <Routes>
-            <Route path='/' element={<Home user={user} />} />
-            <Route path='/leaderboard' element={<Leaderboard users={users} />} />
-            <Route path='/profile/:_id' element={(user ? <Profile users={users} /> : <Home user={user} />)} />
             <Route
-              path='/userprofile'
-              element={<UserProfile user={user} getUser={setUser} />}
+              path='/'
+              element={
+                <Home
+                  user={user}
+                  setUser={setUser}
+                  setCustomLink={setCustomLink}
+                />
+              }
+            />
+            <Route
+              path='/custom/'
+              element={
+                <Custom user={user} setUser={setUser} customLink={customLink} />
+              }
+            />
+            <Route
+              path='/daily/'
+              element={<Daily user={user} setUser={setUser} />}
             />
 
+            <Route path='/' element={<Home user={user} />} />
+            <Route
+              path='/leaderboard'
+              element={<Leaderboard users={users} />}
+            />
+            <Route path='/profile/:_id' element={<Profile users={users} />} />
+            <Route
+              path='/userprofile'
+              element={
+                <UserProfile user={user} getUser={setUser} editable={true} />
+              }
+            />
             <Route
               path='/trivia'
               element={
