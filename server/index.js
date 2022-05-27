@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 8080;
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
-    methods: 'GET, PUT, POST',
+    methods: 'GET, PUT, POST, PATCH, DELETE',
     credentials: true,
   })
 );
@@ -27,9 +27,11 @@ app.use(express.json());
 app.use(express.static(CLIENT_PATH));
 
 const usersRouter = require('./routes/users');
+const questionsRouter = require('./routes/questions');
 const authRouter = require('./routes/auth');
 
 app.use('/users', usersRouter);
+app.use('/questions', questionsRouter);
 app.use('/auth', authRouter);
 // 59 59 23
 cron.schedule('59 59 23 * * *', () => {

@@ -19,23 +19,29 @@ const EditUsername = ({ user, getUser }) => {
 
   const onSubmit = () => {
     // console.log('submitted');
-    axios
-      .patch(
-        `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
-        { username: newUserName }
-      )
-      .then((results) => {
-        getUser(results.data[0]);
-      })
-      .then(() => {
-        setDisplayButton(!displayButton);
-        setDisplayForm(!displayForm);
-        setNewUserName('');
-      })
-      .catch((err) => {
-        setError(true);
-        setHelperText('Username already taken');
-      });
+
+    if (newUserName.length > 2) {
+      axios
+        .patch(
+          `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
+          { username: newUserName }
+        )
+        .then((results) => {
+          getUser(results.data[0]);
+        })
+        .then(() => {
+          setDisplayButton(!displayButton);
+          setDisplayForm(!displayForm);
+          setNewUserName('');
+        })
+        .catch((err) => {
+          setError(true);
+          setHelperText('Username already taken');
+        });
+    } else {
+      setError(true);
+      setHelperText('Username must be at least 3 characters long');
+    }
   };
   const inputChange = (e) => {
     // console.log(e.target.value);

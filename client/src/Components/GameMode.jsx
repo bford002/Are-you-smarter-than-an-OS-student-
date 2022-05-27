@@ -13,6 +13,7 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
   const [difficulty, setDifficulty] = useState('Any');
   const [category, setCategory] = useState('Any');
   const [questions, setQuestions] = useState('5');
+  const [playedDaily, setPlayedDaily] = useState(false);
 
   const handleDifficulty = (event) => {
     setDifficulty(event.target.value);
@@ -21,11 +22,15 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
     setQuestions(event.target.value);
   };
   const handleCategory = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setCategory(event.target.value);
   };
   const navigate = useNavigate();
-  const onSubmitDaily = () => {};
+  const onSubmitDaily = () => {
+    navigate('/daily');
+    setPlayedDaily(!true);
+    // patch user to say they played the daily today
+  };
   const onSubmitClassic = () => {};
   const onSubmitCustom = () => {
     //create a link
@@ -36,7 +41,6 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
     if (difficulty !== 'Any') {
       link = link + `&difficulty=${difficulty}`;
     }
-    console.log(link);
     // setLink
     setCustomLink(link);
     navigate('/custom');
@@ -58,6 +62,7 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
             className='gameButton'
             onClick={onSubmitDaily}
             variant='contained'
+            disabled={playedDaily}
           >
             Play!
           </Button>
