@@ -8,6 +8,8 @@ const EditUsername = ({ user, getUser }) => {
   const [displayButton, setDisplayButton] = useState(true);
   const [displayForm, setDisplayForm] = useState(false);
   const [newUserName, setNewUserName] = useState('');
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
 
   const buttonClick = () => {
     // console.log('click');
@@ -23,7 +25,6 @@ const EditUsername = ({ user, getUser }) => {
         { username: newUserName }
       )
       .then((results) => {
-        // console.log(results.data[0]);
         getUser(results.data[0]);
       })
       .then(() => {
@@ -31,7 +32,10 @@ const EditUsername = ({ user, getUser }) => {
         setDisplayForm(!displayForm);
         setNewUserName('');
       })
-      .catch((err) => console.error(err, 'onSubmit EditUsername'));
+      .catch((err) => {
+        setError(true);
+        setHelperText('Username already taken');
+      });
   };
   const inputChange = (e) => {
     // console.log(e.target.value);
@@ -53,6 +57,8 @@ const EditUsername = ({ user, getUser }) => {
             variant='standard'
             value={newUserName}
             onChange={inputChange}
+            error={error}
+            helperText={helperText}
           />
           <Button variant='outlined' onClick={onSubmit}>
             Submit

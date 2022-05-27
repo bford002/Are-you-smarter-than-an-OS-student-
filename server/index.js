@@ -3,8 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const { connection } = require('./db/index');
+const cron = require('node-cron');
 const passport = require('passport');
 require('./auth');
+const Question = require('./db/models/questions.model.js');
+const axios = require('axios');
 
 const app = express();
 app.use(session({ secret: process.env.SESSION_SECRET }));
@@ -28,6 +31,17 @@ const authRouter = require('./routes/auth');
 
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+// 59 59 23
+cron.schedule('59 59 23 * * *', () => {
+  // console.log(new Date().toLocaleString());
+  axios.get('https://opentdb.com/api.php?amount=10').then((results) => {
+    // console.log(results.data.results);
+    Question.updateOne(
+      { name: 'Daily' },
+      { questions: results.data.results }
+    ).then();
+  });
+});
 
 app.get('/*', function (req, res) {
   res.sendFile(

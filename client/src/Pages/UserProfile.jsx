@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import EditUsername from '../Components/EditUsername.jsx';
 import EditImage from '../Components/EditImage.jsx';
 import { Typography, Toolbar, Box } from '@mui/material';
@@ -12,7 +11,7 @@ import { Typography, Toolbar, Box } from '@mui/material';
 // make avatar clickable to then show a component that allows you to change your avatar
 // add edit button to side of username, when clicked do show component
 
-const UserProfile = ({ user, getUser }) => {
+const UserProfile = ({ user, getUser, editable }) => {
   const [displayEditImage, setDisplayEditImage] = useState(false);
 
   return (
@@ -33,25 +32,31 @@ const UserProfile = ({ user, getUser }) => {
           <Typography className='profileName' variant='h3'>
             {user ? user.username : 'Loading...'}
           </Typography>
-          <EditUsername user={user} getUser={getUser} />
+          {editable && <EditUsername user={user} getUser={getUser} />}
         </Toolbar>
         <h1 className='profileAvatar'>
           {user ? (
             <div>
-              <div
-                className='overlayBox'
-                onClick={() => {
-                  // console.log('click');
-                  setDisplayEditImage(!displayEditImage);
-                }}
-                style={{ marginLeft: '21%' }}
-              >
-                <img src={user.imageUrl} className='image' />
-                <div className='overlay'>
-                  <div className='overlayText'>Click to Change</div>
+              {editable ? (
+                <div
+                  className='overlayBox'
+                  onClick={() => {
+                    // console.log('click');
+                    setDisplayEditImage(!displayEditImage);
+                  }}
+                  style={{ marginLeft: '21%' }}
+                >
+                  <img src={user.imageUrl} className='image' />
+                  <div className='overlay'>
+                    <div className='overlayText'>Click to Change</div>
+                  </div>
                 </div>
-              </div>
-              {displayEditImage && (
+              ) : (
+                <div style={{ marginLeft: '21%' }}>
+                  <img src={user.imageUrl} className='image' />
+                </div>
+              )}
+              {displayEditImage && editable && (
                 <EditImage
                   user={user}
                   getUser={getUser}
