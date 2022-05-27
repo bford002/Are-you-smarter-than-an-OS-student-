@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Link, Typography, TablePagination } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
-import DailyLeaderboard from './DailyLeaderboard.jsx';
+import { Button } from '@mui/material';
+import DailyLeaderboard from '../Components/DailyLeaderboard.jsx';
 
 //uncomment for local testing. Remember to comment when pushing to main branch.
 const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
@@ -13,11 +14,17 @@ import MaterialTable from '@material-table/core';
 
 const Leaderboard = ({ user, users }) => {
   const [isLoading, setIsLoading] = useState(true);
-  // const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [displayDaily, setDisplayDaily] = useState(false);
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  const displayDailyClick = () => {
+    setDisplayDaily(!displayDaily);
+  };
+
+
 
   const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
     <Typography
@@ -130,7 +137,19 @@ const Leaderboard = ({ user, users }) => {
           },
         }}
       />
-      {/* <DailyLeaderboard /> */}
+      <Button
+        className='dailyLeaderboardButton'
+        sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px', backgroundColor: 'rgb(63, 81, 181)' }}
+        variant='text'
+        onClick={displayDailyClick}
+      >
+        Show Daily Leaderboard
+      </Button>
+      <div>
+        {
+          displayDaily ? <DailyLeaderboard users={users} /> : ''
+        }
+      </div>
     </div>
   );
 };

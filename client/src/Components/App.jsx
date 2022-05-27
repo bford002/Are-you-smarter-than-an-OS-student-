@@ -4,7 +4,6 @@ import '../App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
-import DailyLeaderboard from '../Pages/DailyLeaderboard.jsx';
 import Profile from './Profile.jsx';
 import Custom from '../Pages/Custom.jsx';
 import Daily from '../Pages/Daily.jsx';
@@ -91,7 +90,6 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route path='/dailyleaderboard' element={<DailyLeaderboard users={users} />} />
             <Route
               path='/'
               element={
@@ -105,7 +103,7 @@ export const App = () => {
             <Route
               path='/custom/'
               element={
-                <Custom user={user} setUser={setUser} customLink={customLink} />
+                <Custom user={user} setUser={setUser} customLink={customLink} setCustomLink={setCustomLink} />
               }
             />
             <Route
