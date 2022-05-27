@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import { Link, Typography, TablePagination } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
-import DailyLeaderboard from './DailyLeaderboard.jsx';
 
 //uncomment for local testing. Remember to comment when pushing to main branch.
 const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
@@ -14,7 +13,7 @@ import MaterialTable, { MTableToolbar, MTablePagination } from '@material-table/
 
 
 
-const Leaderboard = ({ user, users }) => {
+const DailyLeaderboard = ({ user, users }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   // const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -23,7 +22,7 @@ const Leaderboard = ({ user, users }) => {
     setIsLoading(false);
   }, []);
 
-  const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
+  const Title = ({ text = 'Daily Leaderboard', variant = 'h4' }) => (
     <Typography
       variant={variant}
       style={{ 
@@ -119,24 +118,9 @@ const Leaderboard = ({ user, users }) => {
             color: 'white'
           },
         }}
-        localization={{
-          toolbar: {
-            searchPlaceholder: 'Hello',
-            searchTooltip: 'Buscar'
-          },
-          pagination: {
-            labelRowsSelect: 'Registros',
-            labelRowsPerPage: 'Filas por pagina'
-          },
-          body: {
-            deleteTooltip: 'Eliminar',
-            emptyDataSourceMessage: 'No existen registros'
-          }
-        }}
       />
-      {/* <DailyLeaderboard /> */}
     </div>
   );
 };
 
-export default Leaderboard;
+export default DailyLeaderboard;

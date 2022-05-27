@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
+import DailyLeaderboard from '../Pages/DailyLeaderboard.jsx';
 import Profile from './Profile.jsx';
 
 import { Navbar } from '../Components/NavBar.jsx';
@@ -86,6 +87,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<Home user={user} />} />
             <Route path='/leaderboard' element={<Leaderboard users={users} />} />
+            <Route path='/dailyleaderboard' element={<DailyLeaderboard users={users} />} />
             <Route path='/profile/:_id' element={(user ? <Profile users={users} /> : <Home user={user} />)} />
             <Route
               path='/userprofile'
