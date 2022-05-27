@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import EditUsername from '../Components/EditUsername.jsx';
 import EditImage from '../Components/EditImage.jsx';
-import { Typography, Toolbar, Box } from '@mui/material';
+import { Typography, Toolbar, Button, TextField } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // do axios request to patch a user when they click certain buttons
 // send along whatever you need
@@ -13,6 +15,48 @@ import { Typography, Toolbar, Box } from '@mui/material';
 
 const UserProfile = ({ user, getUser, editable }) => {
   const [displayEditImage, setDisplayEditImage] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteText, setDeleteText] = useState('');
+
+  const navigate = useNavigate();
+
+  const addDefaultProfile = () => {
+    axios
+      .patch(
+        `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
+        {
+          imageUrl:
+            'https://cdn.vox-cdn.com/thumbor/K4azxx_uAtMBZzX62PSimw8Vnjo=/305x0:620x300/1220x813/filters:focal(416x93:514x191):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/54012879/twitter_eggandgumdrop.0.jpg',
+        }
+      )
+      .then((user) => {
+        getUser(user.data[0]);
+      });
+  };
+
+  const displayDeleteButton = () => {
+    setShowDelete(true);
+  };
+
+  const inputChange = (e) => {
+    setDeleteText(e.target.value);
+  };
+
+  const deleteAccount = () => {
+    if (deleteText === 'DELETE') {
+      axios
+        .delete(
+          `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`
+        )
+        .then((results) => {
+          console.log(results);
+        });
+    }
+
+    // check if DELETE is in input field
+    //send user to logout
+    // send delete axios request to delete user
+  };
 
   return (
     <div
@@ -69,6 +113,39 @@ const UserProfile = ({ user, getUser, editable }) => {
             'Loading...'
           )}
         </h1>
+        {editable && (
+          <div>
+            <Button variant='contained' onClick={addDefaultProfile}>
+              Add default profile image
+            </Button>
+            <Button variant='contained' onClick={displayDeleteButton}>
+              Delete Account
+            </Button>
+            {showDelete && (
+              <div style={{ marginTop: '10px' }}>
+                <TextField
+                  id='standard-basic'
+                  label='DELETE'
+                  variant='standard'
+                  value={deleteText}
+                  onChange={inputChange}
+                  error={true}
+                  helperText={'Type "DELETE" to delete your account'}
+                />
+                <Button
+                  variant='contained'
+                  onClick={deleteAccount}
+                  href={
+                    deleteText === 'DELETE' &&
+                    `${process.env.CLIENT_URL}:${process.env.PORT}/auth/logout`
+                  }
+                >
+                  DELETE
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <div
         className='right'
@@ -85,14 +162,20 @@ const UserProfile = ({ user, getUser, editable }) => {
               <br></br>
               Games Played : {user.totalGames} <br></br>
               Win Percentage :
-              {' ' + Math.round((user.wins / user.totalGames) * 100) + '%'}
+              {Math.round((user.wins / user.totalGames) * 100) > 0
+                ? ' ' + Math.round((user.wins / user.totalGames) * 100) + '%'
+                : ' -'}
               <br></br>
               Question Correct : {user.qCorrect}
               <br></br>
               Question Attempted : {user.qAttempted}
               <br></br>
               Percent Correct :
-              {' ' + Math.round((user.qCorrect / user.qAttempted) * 100) + '%'}
+              {Math.round((user.qCorrect / user.qAttempted) * 100)
+                ? ' ' +
+                  Math.round((user.qCorrect / user.qAttempted) * 100) +
+                  '%'
+                : ' -'}
               <br></br>
             </div>
           ) : (
