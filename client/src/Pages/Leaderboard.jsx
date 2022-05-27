@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../App.css';
 
 //uncomment for local testing. Remember to comment when pushing to main branch.
-const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
+const CLIENT_URL = `${process.env.CLIENT_URL}`//:${process.env.PORT}`;
 
 // TABLE MATERIALUI
 import MaterialTable, {
