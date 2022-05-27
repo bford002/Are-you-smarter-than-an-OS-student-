@@ -125,7 +125,15 @@ body {
   object-fit: cover;
   margin: 20px 0px;
 }
-
+.warning {
+  color: red;
+}
+.playAgainButton {
+  padding: 10px;
+}
+.restartButton {
+  padding: 10px;
+}
 .desc {
   color: #333;
   margin-bottom: 20px;

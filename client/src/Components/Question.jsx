@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 
 const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, attemptedQs, setAttemptedQs, qIndex}) => {
   const [answered, setAnswered] = useState(false);
   const [selection, setSelection] = useState(null);
+  const [firstRender, setFirstRender] = useState(true);
   
   const answers = question.incorrect_answers.reduce((result, answer)=>{
     result.push(answer);
@@ -19,7 +20,6 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
       [answers[currentIndex], answers[randomIndex]] = [answers[randomIndex], answers[currentIndex]];
     });
   };
-
   shuffleAnswers();
   
   
