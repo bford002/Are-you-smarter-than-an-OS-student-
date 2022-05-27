@@ -8,6 +8,8 @@ const EditUsername = ({ user, getUser }) => {
   const [displayButton, setDisplayButton] = useState(true);
   const [displayForm, setDisplayForm] = useState(false);
   const [newUserName, setNewUserName] = useState('');
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
 
   const buttonClick = () => {
     // console.log('click');
@@ -17,21 +19,29 @@ const EditUsername = ({ user, getUser }) => {
 
   const onSubmit = () => {
     // console.log('submitted');
-    axios
-      .patch(
-        `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
-        { username: newUserName }
-      )
-      .then((results) => {
-        // console.log(results.data[0]);
-        getUser(results.data[0]);
-      })
-      .then(() => {
-        setDisplayButton(!displayButton);
-        setDisplayForm(!displayForm);
-        setNewUserName('');
-      })
-      .catch((err) => console.error(err, 'onSubmit EditUsername'));
+
+    if (newUserName.length > 2) {
+      axios
+        .patch(
+          `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
+          { username: newUserName }
+        )
+        .then((results) => {
+          getUser(results.data[0]);
+        })
+        .then(() => {
+          setDisplayButton(!displayButton);
+          setDisplayForm(!displayForm);
+          setNewUserName('');
+        })
+        .catch((err) => {
+          setError(true);
+          setHelperText('Username already taken');
+        });
+    } else {
+      setError(true);
+      setHelperText('Username must be at least 3 characters long');
+    }
   };
   const inputChange = (e) => {
     // console.log(e.target.value);
@@ -53,6 +63,8 @@ const EditUsername = ({ user, getUser }) => {
             variant='standard'
             value={newUserName}
             onChange={inputChange}
+            error={error}
+            helperText={helperText}
           />
           <Button variant='outlined' onClick={onSubmit}>
             Submit

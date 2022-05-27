@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Link, Typography, TablePagination } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
@@ -9,13 +9,9 @@ import DailyLeaderboard from './DailyLeaderboard.jsx';
 const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
 
 // TABLE MATERIALUI
-import MaterialTable, { MTableToolbar, MTablePagination } from '@material-table/core';
-
-
-
+import MaterialTable from '@material-table/core';
 
 const Leaderboard = ({ user, users }) => {
-
   const [isLoading, setIsLoading] = useState(true);
   // const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -26,9 +22,9 @@ const Leaderboard = ({ user, users }) => {
   const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
     <Typography
       variant={variant}
-      style={{ 
-        whiteSpace: 'nowrap', 
-        overflow: 'hidden', 
+      style={{
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
         textOverflow: 'ellipsis',
       }}
       className='leaderboardTitle'
@@ -37,12 +33,20 @@ const Leaderboard = ({ user, users }) => {
     </Typography>
   );
 
-
   const columns = [
-    { field: 'id', 
-      headerClassName: 'leaderboardHeader', 
-      title: 'Username',  
-      render: rowData => <Link href={`${CLIENT_URL}/profile/${rowData.id[0].key}`} style={{color: 'white'}} className='leaderboardLinks' >{rowData.id}</Link>
+    {
+      field: 'id',
+      headerClassName: 'leaderboardHeader',
+      title: 'Username',
+      render: (rowData) => (
+        <Link
+          href={`${CLIENT_URL}/profile/${rowData.id[0].key}`}
+          style={{ color: 'white' }}
+          className='leaderboardLinks'
+        >
+          {rowData.id}
+        </Link>
+      ),
     },
     {
       headerClassName: 'leaderboardHeader',
@@ -77,28 +81,34 @@ const Leaderboard = ({ user, users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      customSort: (a, b) => (a.percentCorrect[0] + a.percentCorrect[1]) - (b.percentCorrect[0] + b.percentCorrect[1])
-    }
+      customSort: (a, b) =>
+        a.percentCorrect[0] +
+        a.percentCorrect[1] -
+        (b.percentCorrect[0] + b.percentCorrect[1]),
+    },
   ];
-  
-  const rows =
-    users.map(user => {
-      return {
-        id: [<img src={user.imageUrl} className='avatar' key={user._id} />, user.username],
-        wins: user.wins,
-        gamesPlayed: user.totalGames, 
-        correctAnswers: user.qCorrect, 
-        questionsAttempted: user.qAttempted,
-        percentCorrect: user.qAttempted === 0 ? '-' : Math.round(user.qCorrect / user.qAttempted * 100) + '%'
-      };
-    });
 
+  const rows = users.map((user) => {
+    return {
+      id: [
+        <img src={user.imageUrl} className='avatar' key={user._id} />,
+        user.username,
+      ],
+      wins: user.wins,
+      gamesPlayed: user.totalGames,
+      correctAnswers: user.qCorrect,
+      questionsAttempted: user.qAttempted,
+      percentCorrect:
+        user.qAttempted === 0
+          ? '-'
+          : Math.round((user.qCorrect / user.qAttempted) * 100) + '%',
+    };
+  });
 
   return (
     <div>
       <MaterialTable
         isLoading={isLoading}
-        // onChangeRowsPerPage={}
         title={<Title />}
         data={rows}
         columns={columns}
@@ -112,26 +122,12 @@ const Leaderboard = ({ user, users }) => {
             color: '#FFFFFF',
             backgroundColor: '#6e6e6e',
             textShadow: '3px 2px 3px rgba(255,255,255,.2)',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
           },
           cellStyle: {
             backgroundColor: '#333333',
-            color: 'white'
+            color: 'white',
           },
-        }}
-        localization={{
-          toolbar: {
-            searchPlaceholder: 'Hello',
-            searchTooltip: 'Buscar'
-          },
-          pagination: {
-            labelRowsSelect: 'Registros',
-            labelRowsPerPage: 'Filas por pagina'
-          },
-          body: {
-            deleteTooltip: 'Eliminar',
-            emptyDataSourceMessage: 'No existen registros'
-          }
         }}
       />
       {/* <DailyLeaderboard /> */}

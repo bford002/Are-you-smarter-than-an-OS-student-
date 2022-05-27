@@ -20,7 +20,7 @@ export const Navbar = ({ user }) => {
               boxShadow: 'none',
             }}
             component={Link}
-            href='/trivia'
+            href='/'
           >
             Trivia
           </Typography>
