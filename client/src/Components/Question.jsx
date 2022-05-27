@@ -1,20 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 
-const Question = ({user, setUser, question}) => {
-  const answers = [];
+const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, attemptedQs, setAttemptedQs, totalQs, qIndex}) => {
   const [answered, setAnswered] = useState(false);
   const [selection, setSelection] = useState(null);
-  question.incorrect_answers.forEach((answer) => {
-    answers.push(answer);
-  });
+  const isFirstRender = useRef(true);
+  const [test, setTest] = useState([]);
+  
+  const answers = question.incorrect_answers.reduce((result, answer)=>{
+    result.push(answer);
+    return result;
+  }, []);
   answers.push(question.correct_answer);
-  for (let i = 0; i < answers.length; i++) {
-    const rand = Math.floor(Math.random() * answers.length);
+  const shuffleAnswers = ()=>{
+    answers.forEach((answer, currentIndex) => {
+      const randomIndex = Math.floor(Math.random() * answers.length);
+      [answers[currentIndex], answers[randomIndex]] = [answers[randomIndex], answers[currentIndex]];
+    });
+  };
+  shuffleAnswers();
+  
+  
 
-    [answers[i], answers[rand]] = [answers[rand], answers[i]];
-  }
+  const updateCorrect = ()=>{
+    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
+      qAttempted: user.qAttempted + 1,
+      qCorrect: user.qCorrect + 1
+    })
+      .then((user)=>{
+        setUser(user.data[0]);
+        setCorrectAnswers(correctAnswers + 1);
+        setAttemptedQs(attemptedQs + 1);
+      });
+  };
+
+  const updateIncorrect = ()=>{
+    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
+      qAttempted: user.qAttempted + 1,
+    })
+      .then((user)=>{
+        setAttemptedQs(attemptedQs + 1);
+        setUser(user.data[0]);
+      });
+  };
+
+  
   return (
     <div>
       <h1 className='question'>
@@ -48,10 +79,61 @@ const Question = ({user, setUser, question}) => {
                 selection === question.correct_answer ?
                   <div>
                     {
-                      `${ selection } is the correct answer!`
+                      `${ selection
+                        .replace(/&#039;/g, '\'')
+                        .replace(/&quot;/g, '"')
+                        .replace(/&rsquo;/g, '\'')
+                        .replace(/&rdquo;/g, '\"')
+                        .replace(/&ldquo;/g, '\"')
+                        .replace(/&hellip;/g, '...')
+                        .replace(/&shy;/g, '-')
+                        .replace(/&Eacute;/g, 'É')
+                        .replace(/&eacute;/g, 'é')
+                        .replace(/&amp;/g, '&')
+                        .replace(/&iacute;/g, 'í')
+                        .replace(/&Iacute;/g, 'Í')
+                        .replace(/&aacute;/g, 'á')
+                        .replace(/&Aacute;/g, 'Á')
+                        .replace(/&lrm/g, '')
+                        .replace(/&Oacute;/g, 'Ó')
+                        .replace(/&oacute;/g, 'ó') } is the correct answer!`
                     }
                   </div> :
-                  <div>{ `${ selection } is an incorrect answer! The answer was: ${question.correct_answer }.` }</div>
+                  <div>{ `${ selection
+                    .replace(/&#039;/g, '\'')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&rsquo;/g, '\'')
+                    .replace(/&rdquo;/g, '\"')
+                    .replace(/&ldquo;/g, '\"')
+                    .replace(/&hellip;/g, '...')
+                    .replace(/&shy;/g, '-')
+                    .replace(/&Eacute;/g, 'É')
+                    .replace(/&eacute;/g, 'é')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&iacute;/g, 'í')
+                    .replace(/&Iacute;/g, 'Í')
+                    .replace(/&aacute;/g, 'á')
+                    .replace(/&Aacute;/g, 'Á')
+                    .replace(/&lrm/g, '')
+                    .replace(/&Oacute;/g, 'Ó')
+                    .replace(/&oacute;/g, 'ó') } is an incorrect answer! The answer was: ${question.correct_answer
+                    .replace(/&#039;/g, '\'')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&rsquo;/g, '\'')
+                    .replace(/&rdquo;/g, '\"')
+                    .replace(/&ldquo;/g, '\"')
+                    .replace(/&hellip;/g, '...')
+                    .replace(/&shy;/g, '-')
+                    .replace(/&Eacute;/g, 'É')
+                    .replace(/&eacute;/g, 'é')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&iacute;/g, 'í')
+                    .replace(/&Iacute;/g, 'Í')
+                    .replace(/&aacute;/g, 'á')
+                    .replace(/&Aacute;/g, 'Á')
+                    .replace(/&lrm/g, '')
+                    .replace(/&Oacute;/g, 'Ó')
+                    .replace(/&oacute;/g, 'ó') }.` }</div>
               } 
             </span> : 
             <span className='incorrectAnswer'>
@@ -61,7 +143,7 @@ const Question = ({user, setUser, question}) => {
       </h2>
       {
         answers.map((answer, index) => {
-          return <span key={`answer${index}`} className='answer' >
+          return <span key={`q#${qIndex}a#${index}`} className='answer' >
             <Button 
               className ='answerButton' 
               onClick={
@@ -69,19 +151,8 @@ const Question = ({user, setUser, question}) => {
                   setAnswered(true);
                   setSelection(answer);
                   answer === question.correct_answer ?            
-                    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
-                      qAttempted: user.qAttempted + 1,
-                      qCorrect: user.qCorrect + 1
-                    })
-                      .then((user)=>{
-                        setUser(user.data[0]);
-                      }) :
-                    axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
-                      qAttempted: user.qAttempted + 1,
-                    })
-                      .then((user)=>{
-                        setUser(user.data[0]);
-                      });
+                    updateCorrect() :
+                    updateIncorrect();
                 }
               }
               variant='contained'
