@@ -7,7 +7,7 @@ const Home = ({ user, setUser, setCustomLink }) => {
 
   return (
     <div>
-      <h1 className='homeTitle'>Are you smarter than an OS Student?!</h1>
+      <h1 className='homeTitle'>Are you smarter than an Spark Student?!</h1>
       {user ? (
         <div className='gameSelection'>
           {gameModes.map((gameMode, i) => {

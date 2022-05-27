@@ -1,24 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 
-const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, attemptedQs, setAttemptedQs, totalQs, qIndex}) => {
+const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, attemptedQs, setAttemptedQs, qIndex}) => {
   const [answered, setAnswered] = useState(false);
   const [selection, setSelection] = useState(null);
-  const isFirstRender = useRef(true);
-  const [test, setTest] = useState([]);
   
   const answers = question.incorrect_answers.reduce((result, answer)=>{
     result.push(answer);
     return result;
   }, []);
+
   answers.push(question.correct_answer);
+
   const shuffleAnswers = ()=>{
-    answers.forEach((answer, currentIndex) => {
+    answers.forEach(( answer, currentIndex) => {
       const randomIndex = Math.floor(Math.random() * answers.length);
       [answers[currentIndex], answers[randomIndex]] = [answers[randomIndex], answers[currentIndex]];
     });
   };
+
   shuffleAnswers();
   
   
@@ -44,7 +45,6 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
         setUser(user.data[0]);
       });
   };
-
   
   return (
     <div>
@@ -60,6 +60,8 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
             .replace(/&shy;/g, '-')
             .replace(/&Eacute;/g, 'É')
             .replace(/&eacute;/g, 'é')
+            .replace(/&Uacute;/g, 'Ú')
+            .replace(/&uacute;/g, 'ú')
             .replace(/&amp;/g, '&')
             .replace(/&iacute;/g, 'í')
             .replace(/&Iacute;/g, 'Í')
@@ -89,6 +91,8 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                         .replace(/&shy;/g, '-')
                         .replace(/&Eacute;/g, 'É')
                         .replace(/&eacute;/g, 'é')
+                        .replace(/&Uacute;/g, 'Ú')
+                        .replace(/&uacute;/g, 'ú')
                         .replace(/&amp;/g, '&')
                         .replace(/&iacute;/g, 'í')
                         .replace(/&Iacute;/g, 'Í')
@@ -109,6 +113,8 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                     .replace(/&shy;/g, '-')
                     .replace(/&Eacute;/g, 'É')
                     .replace(/&eacute;/g, 'é')
+                    .replace(/&Uacute;/g, 'Ú')
+                    .replace(/&uacute;/g, 'ú')
                     .replace(/&amp;/g, '&')
                     .replace(/&iacute;/g, 'í')
                     .replace(/&Iacute;/g, 'Í')
@@ -126,6 +132,8 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                     .replace(/&shy;/g, '-')
                     .replace(/&Eacute;/g, 'É')
                     .replace(/&eacute;/g, 'é')
+                    .replace(/&Uacute;/g, 'Ú')
+                    .replace(/&uacute;/g, 'ú')
                     .replace(/&amp;/g, '&')
                     .replace(/&iacute;/g, 'í')
                     .replace(/&Iacute;/g, 'Í')
@@ -151,8 +159,10 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                   setAnswered(true);
                   setSelection(answer);
                   answer === question.correct_answer ?            
-                    updateCorrect() :
+                    (updateCorrect(), setCorrectAnswers(correctAnswers + 1)) :
                     updateIncorrect();
+                  setAttemptedQs(attemptedQs + 1);
+                  
                 }
               }
               variant='contained'
@@ -174,6 +184,8 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                   .replace(/&shy;/g, '-')
                   .replace(/&Eacute;/g, 'É')
                   .replace(/&eacute;/g, 'é')
+                  .replace(/&Uacute;/g, 'Ú')
+                  .replace(/&uacute;/g, 'ú')
                   .replace(/&amp;/g, '&')
                   .replace(/&iacute;/g, 'í')
                   .replace(/&Iacute;/g, 'Í')
