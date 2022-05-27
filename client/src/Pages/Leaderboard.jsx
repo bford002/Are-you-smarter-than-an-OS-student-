@@ -4,25 +4,17 @@ import { Link, Typography, TablePagination } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
 import { Button } from '@mui/material';
-import DailyLeaderboard from '../Components/DailyLeaderboard.jsx';
-
-//uncomment for local testing. Remember to comment when pushing to main branch.
-const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
+import TopFive from '../Components/TopFive.jsx';
 
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
 
 const Leaderboard = ({ user, users }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [displayDaily, setDisplayDaily] = useState(false);
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
-  const displayDailyClick = () => {
-    setDisplayDaily(!displayDaily);
-  };
 
 
 
@@ -42,16 +34,26 @@ const Leaderboard = ({ user, users }) => {
 
   const columns = [
     {
+      field: 'rank',
+      headerClassName: 'leaderboardHeader',
+      title: 'Rank',
+      align: 'center',
+      render: (rowData) => rowData.tableData.index + 1
+    },
+    {
       field: 'id',
       headerClassName: 'leaderboardHeader',
       title: 'Username',
+      align: 'left',
       render: (rowData) => (
         <Link
-          href={`${CLIENT_URL}/profile/${rowData.id[0].key}`}
+          href={`${process.env.CLIENT_URL}:${process.env.PORT}/profile/${rowData.id[0].key}`}
           style={{ color: 'white' }}
           className='leaderboardLinks'
         >
-          {rowData.id}
+          {
+            rowData.percentCorrect[0] >= 9 ? rowData.id : [rowData.id[0], rowData.id[1]]
+          }
         </Link>
       ),
     },
@@ -100,7 +102,8 @@ const Leaderboard = ({ user, users }) => {
       id: [
         <img src={user.imageUrl} className='avatar' key={user._id} />,
         user.username,
-      ],
+        <img className='fireAvatar' 
+          src={'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='} />],
       wins: user.wins,
       gamesPlayed: user.totalGames,
       correctAnswers: user.qCorrect,
@@ -120,6 +123,7 @@ const Leaderboard = ({ user, users }) => {
         data={rows}
         columns={columns}
         options={{
+          padding: 'dense',
           pageSize: 10,
           draggable: false,
           showFirstLastPageButtons: false,
@@ -137,19 +141,6 @@ const Leaderboard = ({ user, users }) => {
           },
         }}
       />
-      <Button
-        className='dailyLeaderboardButton'
-        sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px', backgroundColor: 'rgb(63, 81, 181)' }}
-        variant='text'
-        onClick={displayDailyClick}
-      >
-        Show Daily Leaderboard
-      </Button>
-      <div>
-        {
-          displayDaily ? <DailyLeaderboard users={users} /> : ''
-        }
-      </div>
     </div>
   );
 };

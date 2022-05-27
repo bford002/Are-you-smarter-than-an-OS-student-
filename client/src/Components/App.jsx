@@ -12,8 +12,6 @@ import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 import TriviaPage from '../Pages/TriviaPage.jsx';
 
-// const CLIENT_URL = process.env.CLIENT_URL;
-// const PORT = process.env.PORT;
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -83,18 +81,19 @@ export const App = () => {
     <div>
       <Navbar user={user} />
       <BrowserRouter>
+
         {users.map((user) => {
           return <Link to={'/profile/' + user._id} key={user._id} />;
         })}
 
         <div>
           <Routes>
-            <Route path='/' element={<Home user={user} />} />
             <Route
               path='/'
               element={
                 <Home
                   user={user}
+                  users={users}
                   setUser={setUser}
                   setCustomLink={setCustomLink}
                 />
@@ -103,7 +102,7 @@ export const App = () => {
             <Route
               path='/custom/'
               element={
-                <Custom user={user} setUser={setUser} customLink={customLink} setCustomLink={setCustomLink} />
+                <Custom user={user} setUser={setUser} customLink={customLink} />
               }
             />
             <Route
