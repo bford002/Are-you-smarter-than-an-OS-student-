@@ -40,5 +40,18 @@ router.patch('/:_id', (req, res) => {
         .json({ success: false, message: 'Username already exists' });
     });
 });
+router.delete('/:_id', (req, res) => {
+  const _id = req.params._id;
+  // console.log(req.body);
+  User.deleteOne({ _id: _id })
+    .then((results) => {
+      // console.log(results);
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json({ success: false, message: 'User does not exist' });
+    });
+});
 
 module.exports = router;
