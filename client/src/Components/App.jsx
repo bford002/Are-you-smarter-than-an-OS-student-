@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {BrowserRouter, Route, Routes, Navigate, Link} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
 import Profile from './Profile.jsx';
-
-
 
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
@@ -14,7 +12,6 @@ import TriviaPage from '../Pages/TriviaPage.jsx';
 
 // const CLIENT_URL = process.env.CLIENT_URL;
 // const PORT = process.env.PORT;
-
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -38,7 +35,16 @@ export const App = () => {
           }
         })
         .then((resObj) => {
-          setUser(resObj.data.user);
+          const _id = resObj.data.user._id;
+          return _id;
+        })
+        .then((_id) => {
+          axios
+            .get(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${_id}`)
+            .then((results) => {
+              // console.log(results.data[0]);
+              setUser(results.data[0]);
+            });
         })
         .then(() => console.log(user))
         .catch((err) => {
@@ -48,37 +54,33 @@ export const App = () => {
     getUser(), getAllUsers();
   }, []);
 
-
   const [users, setUsers] = useState([]);
 
   const getAllUsers = () => {
-    axios.get('/users')
+    axios
+      .get('/users')
       .then((results) => {
         // console.log(results.data);
         // const [users, setUsers] = useState(results.data);
         //SET STATE
-        setUsers(results.data.sort((a, b) => {
-          return b.wins - a.wins;
-        }));
+        setUsers(
+          results.data.sort((a, b) => {
+            return b.wins - a.wins;
+          })
+        );
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-
-
-
   return (
     <div>
       <Navbar user={user} />
       <BrowserRouter>
-
-        {
-          users.map(user => {
-            return <Link to={'/profile/' + user._id} key={user._id} />;
-          })
-        }
+        {users.map((user) => {
+          return <Link to={'/profile/' + user._id} key={user._id} />;
+        })}
 
         <div>
           <Routes>
@@ -89,7 +91,17 @@ export const App = () => {
               path='/userprofile'
               element={<UserProfile user={user} getUser={setUser} />}
             />
-            <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
+
+            <Route
+              path='/trivia'
+              element={
+                user ? (
+                  <TriviaPage user={user} setUser={setUser} />
+                ) : (
+                  <Home user={user} />
+                )
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>
