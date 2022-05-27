@@ -7,6 +7,7 @@ import Leaderboard from '../Pages/Leaderboard.jsx';
 import Profile from './Profile.jsx';
 
 
+
 import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 import TriviaPage from '../Pages/TriviaPage.jsx';
@@ -82,16 +83,12 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route path='/userprofile' element={<UserProfile user={user} />} />
-            <Route path='/leaderboard' element={(user ? <Leaderboard users={users} /> : <Home user={user} />)} />
-            <Route path='/trivia' element={(user ? <TriviaPage /> : <Home user={user} />)} />
+            <Route path='/leaderboard' element={<Leaderboard users={users} />} />
             <Route path='/profile/:_id' element={(user ? <Profile users={users} /> : <Home user={user} />)} />
             <Route
               path='/userprofile'
               element={<UserProfile user={user} getUser={setUser} />}
             />
-
-            <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/trivia' element={(user ? <TriviaPage user = {user} setUser={setUser}/> : <Home user={user} />)} />
           </Routes>
         </div>
