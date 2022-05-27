@@ -103,13 +103,12 @@ export const App = () => {
                 <Custom user={user} setUser={setUser} customLink={customLink} />
               }
             />
+
+            <Route path='/' element={<Home user={user} />} />
             <Route
               path='/leaderboard'
-              element={
-                user ? <Leaderboard users={users} /> : <Home user={user} />
-              }
+              element={<Leaderboard users={users} />}
             />
-            href
             <Route
               path='/profile/:_id'
               element={user ? <Profile users={users} /> : <Home user={user} />}

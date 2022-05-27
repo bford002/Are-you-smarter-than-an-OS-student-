@@ -4,33 +4,47 @@ import Question from './Question.jsx';
 
 const Questions = ({ user, setUser, daily, customLink }) => {
   const [questions, setQuestions] = useState(null);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [attemptedQs, setAttemptedQs] = useState(0);
   useEffect(() => {
     const getQuestions = () => {
-      console.log(customLink);
-      axios.get(customLink || process.env.TRIVIA_URL).then((data) => {
-        console.log(customLink);
-        setQuestions(data.data.results);
-      });
+      axios.get( customLink ||process.env.TRIVIA_URL)
+        .then(({data}) => {
+          setQuestions(data.results);
+        })
+        .then(()=>{
+          axios.patch(`${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`, {
+            totalGames: user.totalGames + 1,
+          });
+        })
+        .catch((err)=>{
+          console.error(err, `something went wrong updating total games for ${user.username}`);
+        });
     };
     getQuestions();
   }, []);
 
   return (
     <div className='questions'>
-      {questions
-        ? questions.map((question, index, collection) => {
-            return (
-              <div className='Question'>
-                <Question
-                  setUser={setUser}
-                  user={user}
-                  question={question}
-                  key={`q${index}`}
-                />
-              </div>
-            );
-          })
-        : 'Loading Questions...'}
+      {
+        questions ? 
+          questions.map((question, index) => {
+            return <div className='Question'>
+              <Question 
+                qIndex = {index} 
+                setCorrectAnswers = {setCorrectAnswers} 
+                correctAnswers = {correctAnswers} 
+                setUser={setUser} 
+                user = {user} 
+                question = {question} 
+                key = {`qList${index}`} 
+                totalQs={questions.length} 
+                attemptedQs={attemptedQs} 
+                setAttemptedQs={setAttemptedQs}/>
+            </div>;
+          }) : 
+          'Loading Questions...'
+      }
     </div>
   );
 };
