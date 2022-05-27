@@ -1,23 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import { Link } from '@material-ui/core';
+import { Link, Typography, TablePagination } from '@material-ui/core';
 import axios from 'axios';
 import '../App.css';
 
+//uncomment for local testing. Remember to comment when pushing to main branch.
+const CLIENT_URL = `${process.env.CLIENT_URL}`; //:${process.env.PORT}`;
+
 // TABLE MATERIALUI
-import MaterialTable from '@material-table/core';
+import MaterialTable, { MTableToolbar, MTablePagination } from '@material-table/core';
 
 
 
 
 const Leaderboard = ({ user, users }) => {
 
+  const [isLoading, setIsLoading] = useState(true);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
+    <Typography
+      variant={variant}
+      style={{ 
+        whiteSpace: 'nowrap', 
+        overflow: 'hidden', 
+        textOverflow: 'ellipsis',
+      }}
+      className='leaderboardTitle'
+    >
+      {text}
+    </Typography>
+  );
+
 
   const columns = [
     { field: 'id', 
       headerClassName: 'leaderboardHeader', 
       title: 'Username',  
-      render: rowData => <Link href={`/profile/${rowData.id[0].key}`}>{rowData.id}</Link>
+      render: rowData => <Link href={`${CLIENT_URL}/profile/${rowData.id[0].key}`} style={{color: 'white'}} className='leaderboardLinks' >{rowData.id}</Link>
     },
     {
       headerClassName: 'leaderboardHeader',
@@ -52,7 +76,7 @@ const Leaderboard = ({ user, users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      sortable: true,
+      customSort: (a, b) => (a.percentCorrect[0] + a.percentCorrect[1]) - (b.percentCorrect[0] + b.percentCorrect[1])
     }
   ];
   
@@ -64,7 +88,7 @@ const Leaderboard = ({ user, users }) => {
         gamesPlayed: user.totalGames, 
         correctAnswers: user.qCorrect, 
         questionsAttempted: user.qAttempted,
-        percentCorrect: user.qAttempted === 0 ? '-' : user.qCorrect / user.qAttempted * 100 + '%'
+        percentCorrect: user.qAttempted === 0 ? '-' : Math.round(user.qCorrect / user.qAttempted * 100) + '%'
       };
     });
 
@@ -72,17 +96,27 @@ const Leaderboard = ({ user, users }) => {
   return (
     <div>
       <MaterialTable
-        title='Trivia Leaderboard'
+        isLoading={isLoading}
+        // onChangeRowsPerPage={}
+        title={<Title />}
         data={rows}
         columns={columns}
         options={{
-          paging: true,
           pageSize: 10,
-          pageSizeOptions: [5, 10, 20],
           draggable: false,
           showFirstLastPageButtons: false,
           emptyRowsWhenPaging: false,
           thirdSortClick: false,
+          headerStyle: {
+            color: '#FFFFFF',
+            backgroundColor: '#6e6e6e',
+            textShadow: '3px 2px 3px rgba(255,255,255,.2)',
+            fontWeight: 'bold'
+          },
+          cellStyle: {
+            backgroundColor: '#333333',
+            color: 'white'
+          },
         }}
       />
     </div>

@@ -85,17 +85,8 @@ export const App = () => {
         <div>
           <Routes>
             <Route path='/' element={<Home user={user} />} />
-            <Route
-              path='/leaderboard'
-              element={
-                user ? <Leaderboard users={users} /> : <Home user={user} />
-              }
-            />
-
-            <Route
-              path='/profile/:_id'
-              element={user ? <Profile users={users} /> : <Home user={user} />}
-            />
+            <Route path='/leaderboard' element={<Leaderboard users={users} />} />
+            <Route path='/profile/:_id' element={(user ? <Profile users={users} /> : <Home user={user} />)} />
             <Route
               path='/userprofile'
               element={<UserProfile user={user} getUser={setUser} />}

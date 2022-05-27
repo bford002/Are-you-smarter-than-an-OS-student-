@@ -8,7 +8,7 @@ const Questions = ({user, setUser}) => {
   const [attemptedQs, setAttemptedQs] = useState(0);
   useEffect(() => {
     const getQuestions = () => {
-      console.log(user);
+      //console.log(user);
       axios.get(process.env.TRIVIA_URL)
         .then(({data}) => {
           setQuestions(data.results);
