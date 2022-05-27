@@ -49,7 +49,7 @@ router.delete('/:_id', (req, res) => {
       res.status(200).send(results);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       res.status(404).json({ success: false, message: 'User does not exist' });
     });
 });

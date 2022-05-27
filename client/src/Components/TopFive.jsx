@@ -47,7 +47,7 @@ const TopFive = ({ user, users }) => {
         style={{color: 'white'}} className='leaderboardLinks' 
       >
         {
-          rowData.percentCorrect[0] >= 8 ? rowData.id : [rowData.id[0], rowData.id[1]]
+          rowData.percentCorrect[0] >= 9 ? rowData.id : [rowData.id[0], rowData.id[1]]
         }
       </Link>
     },
