@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, Typography } from '@material-ui/core';
 import '../App.css';
 
-
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
 
@@ -12,8 +11,6 @@ const Leaderboard = ({ users }) => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
-
 
   const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
     <Typography
@@ -35,7 +32,7 @@ const Leaderboard = ({ users }) => {
       headerClassName: 'leaderboardHeader',
       title: 'Rank',
       align: 'center',
-      render: (rowData) => rowData.tableData.index + 1
+      render: (rowData) => rowData.tableData.index + 1,
     },
     {
       field: 'id',
@@ -48,9 +45,9 @@ const Leaderboard = ({ users }) => {
           style={{ color: 'white' }}
           className='leaderboardLinks'
         >
-          {
-            parseInt(rowData.percentCorrect) >= 90 ? rowData.id : [rowData.id[0], rowData.id[1]]
-          }
+          {parseInt(rowData.percentCorrect) >= 90
+            ? rowData.id
+            : [rowData.id[0], rowData.id[1]]}
         </Link>
       ),
     },
@@ -106,8 +103,13 @@ const Leaderboard = ({ users }) => {
       id: [
         <img src={user.imageUrl} className='avatar' key={user._id} />,
         user.username,
-        <img className='fireAvatar' 
-          src={'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='} />],
+        <img
+          className='fireAvatar'
+          src={
+            'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='
+          }
+        />,
+      ],
       wins: user.wins,
       gamesPlayed: user.totalGames,
       correctAnswers: user.qCorrect,

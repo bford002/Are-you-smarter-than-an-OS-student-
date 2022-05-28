@@ -7,12 +7,12 @@ import {
   Button,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const GameMode = ({ type, setCustomLink }) => {
+const GameMode = ({ user, type, setCustomLink }) => {
   const [difficulty, setDifficulty] = useState('Any');
   const [category, setCategory] = useState('Any');
   const [questions, setQuestions] = useState('5');
-  const [playedDaily, setPlayedDaily] = useState(false);
 
   const handleDifficulty = (event) => {
     setDifficulty(event.target.value);
@@ -27,8 +27,15 @@ const GameMode = ({ type, setCustomLink }) => {
   const navigate = useNavigate();
   const onSubmitDaily = () => {
     navigate('/daily');
-    setPlayedDaily(!true);
     // patch user to say they played the daily today
+    axios
+      .patch(
+        `${process.env.CLIENT_URL}:${process.env.PORT}/users/${user._id}`,
+        { dailyCompleted: true }
+      )
+      .then((results) => {
+        console.log(results);
+      });
   };
   const onSubmitCustom = () => {
     //create a link
@@ -60,10 +67,11 @@ const GameMode = ({ type, setCustomLink }) => {
             className='gameButton'
             onClick={onSubmitDaily}
             variant='contained'
-            disabled={playedDaily}
+            disabled={user.dailyCompleted}
           >
             Play!
           </Button>
+          {user.dailyCompleted && <p>Come back tomorrow, to try again! </p>}
         </div>
       )}
       {type === 'Classic' && (
