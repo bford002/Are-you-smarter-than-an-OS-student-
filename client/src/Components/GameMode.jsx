@@ -62,7 +62,7 @@ const GameMode = ({ user, type, setCustomLink }) => {
             alt=''
             className='img'
           />
-          <p className='desc'>Play todays, custom game! </p>
+          <p className='desc'>Answer today's daily questions! 10 new questions everyday!</p>
           <Button
             className='gameButton'
             onClick={onSubmitDaily}
@@ -83,8 +83,12 @@ const GameMode = ({ user, type, setCustomLink }) => {
             alt=''
             className='img'
           />
-          <p className='desc'>Play a Standard Trivia Game!</p>
-          <Button variant='contained' className='gameButton' href='/trivia'>
+          <p className='desc'>5 general knowledge questions!</p>
+          <Button
+            variant='contained'
+            className='gameButton'
+            href='/trivia'
+          >
             Play!
           </Button>
         </div>
@@ -152,7 +156,7 @@ const GameMode = ({ user, type, setCustomLink }) => {
               <MenuItem value={'28'}>Vehicles</MenuItem>
             </Select>
           </FormControl>
-          <p className='desc'>Customized your game</p>
+          <p className='desc'>You decide question difficulty, how many questions you're asked, and the category the questions come from!</p>
           <Button
             className='gameButton'
             variant='contained'

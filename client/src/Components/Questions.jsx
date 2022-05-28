@@ -86,7 +86,7 @@ const Questions = ({ user, setUser, daily, customLink }) => {
             backgroundColor: 'red'
           }}
           href='/'
-        >Play Again</Button></h2></div> : <div><h2><Button 
+        >Play Again</Button> {correctAnswers === questions.length ? 'Congratulations, you win! You answered all the questions correctly!' : `You answered ${correctAnswers} question(s) correctly!`} </h2></div> : <div><h2><Button 
           className ='restartButton' 
           variant='contained'
           sx={{ 

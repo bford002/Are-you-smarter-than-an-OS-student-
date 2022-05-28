@@ -36,7 +36,7 @@ app.use('/users', usersRouter);
 app.use('/questions', questionsRouter);
 app.use('/auth', authRouter);
 // 59 59 23
-cron.schedule('01 * * * * *', () => {
+cron.schedule('59 59 23 * * *', () => {
   // console.log(new Date().toLocaleString());
   axios.get('https://opentdb.com/api.php?amount=10').then((results) => {
     // console.log(results.data.results);
