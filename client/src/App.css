@@ -22,6 +22,7 @@
 }
 .gameMode {
   width: 30%;
+  min-width: 130px;
   padding: 10px;
   border-radius: 20px;
   -webkit-box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);

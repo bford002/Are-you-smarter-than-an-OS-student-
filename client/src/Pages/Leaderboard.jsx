@@ -87,10 +87,17 @@ const Leaderboard = ({ users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      customSort: (a, b) =>
-        a.percentCorrect[0] +
-        a.percentCorrect[1] -
-        (b.percentCorrect[0] + b.percentCorrect[1]),
+      customSort: (a, b) => {
+        let tempA = a.percentCorrect;
+        let tempB = b.percentCorrect;        
+        if (tempA === '-') {
+          tempA = 0;
+        }
+        if (tempB === '-') {
+          tempB = 0;
+        }
+        return parseInt(tempA) - parseInt(tempB);
+      },
     },
   ];
 
