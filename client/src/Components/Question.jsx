@@ -69,6 +69,13 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
             .replace(/&lrm/g, '')
             .replace(/&Oacute;/g, 'Ó')
             .replace(/&oacute;/g, 'ó')
+            .replace(/&ouml;/g, 'ö')
+            .replace(/&Ouml;/g, 'Ö')
+            .replace(/&minus;/g, '−')
+            .replace(/&Uuml;/g, 'Ü')
+            .replace(/&uuml;/g, 'ü')
+            .replace(/&Aring;/g, 'Å')
+            .replace(/&aring;/g, 'å')
         }
       </h1>
       <h2 className='selection'>
@@ -99,7 +106,14 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                         .replace(/&Aacute;/g, 'Á')
                         .replace(/&lrm/g, '')
                         .replace(/&Oacute;/g, 'Ó')
-                        .replace(/&oacute;/g, 'ó') } is the correct answer!`
+                        .replace(/&oacute;/g, 'ó')
+                        .replace(/&ouml;/g, 'ö')
+                        .replace(/&Ouml;/g, 'Ö')
+                        .replace(/&minus;/g, '−')
+                        .replace(/&Uuml;/g, 'Ü')
+                        .replace(/&uuml;/g, 'ü')
+                        .replace(/&Aring;/g, 'Å')
+                        .replace(/&aring;/g, 'å') } is the correct answer!`
                     }
                   </div> :
                   <div>{ `${ selection
@@ -121,7 +135,14 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                     .replace(/&Aacute;/g, 'Á')
                     .replace(/&lrm/g, '')
                     .replace(/&Oacute;/g, 'Ó')
-                    .replace(/&oacute;/g, 'ó') } is an incorrect answer! The answer was: ${question.correct_answer
+                    .replace(/&oacute;/g, 'ó')
+                    .replace(/&ouml;/g, 'ö')
+                    .replace(/&Ouml;/g, 'Ö')
+                    .replace(/&minus;/g, '−')
+                    .replace(/&Uuml;/g, 'Ü')
+                    .replace(/&uuml;/g, 'ü')
+                    .replace(/&Aring;/g, 'Å')
+                    .replace(/&aring;/g, 'å') } is an incorrect answer! The answer was: ${question.correct_answer
                     .replace(/&#039;/g, '\'')
                     .replace(/&quot;/g, '"')
                     .replace(/&rsquo;/g, '\'')
@@ -140,7 +161,14 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                     .replace(/&Aacute;/g, 'Á')
                     .replace(/&lrm/g, '')
                     .replace(/&Oacute;/g, 'Ó')
-                    .replace(/&oacute;/g, 'ó') }.` }</div>
+                    .replace(/&oacute;/g, 'ó')
+                    .replace(/&ouml;/g, 'ö')
+                    .replace(/&Ouml;/g, 'Ö')
+                    .replace(/&minus;/g, '−')
+                    .replace(/&Uuml;/g, 'Ü')
+                    .replace(/&uuml;/g, 'ü')
+                    .replace(/&Aring;/g, 'Å')
+                    .replace(/&aring;/g, 'å') }.` }</div>
               } 
             </span> : 
             <span className='incorrectAnswer'>
@@ -193,6 +221,13 @@ const Question = ({user, setUser, question, correctAnswers, setCorrectAnswers, a
                   .replace(/&lrm/g, '')
                   .replace(/&Oacute;/g, 'Ó')
                   .replace(/&oacute;/g, 'ó') 
+                  .replace(/&ouml;/g, 'ö')
+                  .replace(/&Ouml;/g, 'Ö')
+                  .replace(/&minus;/g, '−')
+                  .replace(/&Uuml;/g, 'Ü')
+                  .replace(/&uuml;/g, 'ü')
+                  .replace(/&Aring;/g, 'Å')
+                  .replace(/&aring;/g, 'å')
               }
             </Button>
           </span>;
