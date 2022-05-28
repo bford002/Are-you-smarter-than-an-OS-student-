@@ -7,7 +7,7 @@ const Custom = ({ user, setUser, customLink }) => {
       {customLink ? (
         <TriviaPage setUser={setUser} user={user} customLink={customLink} />
       ) : (
-        'Loading your questions'
+        'Loading questions...'
       )}
     </div>
   );

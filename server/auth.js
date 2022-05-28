@@ -1,6 +1,5 @@
 const passport = require('passport');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-const findOrCreate = require('mongoose-findorcreate');
  
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;

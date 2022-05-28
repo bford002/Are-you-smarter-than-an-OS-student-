@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Link, Typography, TablePagination } from '@material-ui/core';
-import axios from 'axios';
+import { Link, Typography } from '@material-ui/core';
 import '../App.css';
-import { Button } from '@mui/material';
-import TopFive from '../Components/TopFive.jsx';
+
 
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
 
-const Leaderboard = ({ user, users }) => {
+const Leaderboard = ({ users }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -52,7 +49,7 @@ const Leaderboard = ({ user, users }) => {
           className='leaderboardLinks'
         >
           {
-            rowData.percentCorrect[0] >= 9 ? rowData.id : [rowData.id[0], rowData.id[1]]
+            parseInt(rowData.percentCorrect) >= 90 ? rowData.id : [rowData.id[0], rowData.id[1]]
           }
         </Link>
       ),
