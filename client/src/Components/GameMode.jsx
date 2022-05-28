@@ -79,7 +79,6 @@ const GameMode = ({ type, setCustomLink }) => {
           <Button
             variant='contained'
             className='gameButton'
-            onClick={onSubmitClassic}
             href='/trivia'
           >
             Play!
