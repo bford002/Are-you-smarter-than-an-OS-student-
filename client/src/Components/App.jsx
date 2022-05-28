@@ -68,7 +68,15 @@ export const App = () => {
         //SET STATE
         setUsers(
           results.data.sort((a, b) => {
-            return b.wins - a.wins;
+            let tempA = Math.round((a.qCorrect / a.qAttempted) * 100) + '%';
+            let tempB = Math.round((b.qCorrect / b.qAttempted) * 100) + '%';        
+            if (tempA === '-') {
+              tempA = 0;
+            }
+            if (tempB === '-') {
+              tempB = 0;
+            }
+            return parseInt(tempB) - parseInt(tempA);
           })
         );
       })

@@ -2,8 +2,7 @@ const passport = require('passport');
 const router = require('express').Router();
 require('dotenv').config();
 
-const CLIENT_URL = `${process.env.CLIENT_URL}`;
-//const CLIENT_URL = `${process.env.CLIENT_URL}:${process.env.PORT}`;
+const CLIENT_URL = process.env.CLIENT_URL === 'http://localhost' ? `${process.env.CLIENT_URL}:${process.env.PORT}` : process.env.CLIENT_URL;
 
 router.get('/login/success', (req, res) => {
   if (req.user) {
@@ -32,7 +31,6 @@ router.get('/logout', (req, res) => {
   req.logOut(() => {
     res.redirect(CLIENT_URL);
   });
-  //req.session.destroy();
 });
 
 module.exports = router;
