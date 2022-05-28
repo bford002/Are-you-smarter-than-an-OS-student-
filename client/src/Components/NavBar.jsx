@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { AppBar, Toolbar } from '@material-ui/core';
-// import { Link } from "react-router-dom";
 import { Button, Typography, Link } from '@mui/material';
 
 export const Navbar = ({ user }) => {
@@ -62,15 +61,25 @@ export const Navbar = ({ user }) => {
               </Button>
             </div>
           ) : (
-            <Button
-              className='loginButton'
-              size='small'
-              sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
-              variant='text'
-              href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}
-            >
+            <div>
+              <Button
+                className='logoutButton'
+                sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                variant='text'
+                href='/leaderboard'
+              >
+                Leaderboard
+              </Button>
+              <Button
+                className='loginButton'
+                size='small'
+                sx={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+                variant='text'
+                href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}
+              >
               Login
-            </Button>
+              </Button>
+            </div>
           )}
         </Toolbar>
       </AppBar>

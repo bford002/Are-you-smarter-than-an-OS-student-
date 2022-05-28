@@ -5,19 +5,21 @@ import '../App.css';
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
 
-const Leaderboard = ({ users }) => {
+const TopFive = ({ users }) => {
+
   const [isLoading, setIsLoading] = useState(true);
+  const topFive = users.slice(0, 5);
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
 
-  const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
+  const Title = ({ text = 'Top 5', variant = 'h4' }) => (
     <Typography
       variant={variant}
-      style={{
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
+      style={{ 
+        whiteSpace: 'nowrap', 
+        overflow: 'hidden', 
         textOverflow: 'ellipsis',
       }}
       className='leaderboardTitle'
@@ -26,30 +28,26 @@ const Leaderboard = ({ users }) => {
     </Typography>
   );
 
+
   const columns = [
     {
       field: 'rank',
       headerClassName: 'leaderboardHeader',
       title: 'Rank',
       align: 'center',
-      render: (rowData) => rowData.tableData.index + 1,
+      render: (rowData) => rowData.tableData.index + 1
     },
-    {
-      field: 'id',
-      headerClassName: 'leaderboardHeader',
+    { field: 'id', 
+      headerClassName: 'leaderboardHeader', 
       title: 'Username',
-      align: 'left',
-      render: (rowData) => (
-        <Link
-          href={`${process.env.CLIENT_URL}:${process.env.PORT}/profile/${rowData.id[0].key}`}
-          style={{ color: 'white' }}
-          className='leaderboardLinks'
-        >
-          {parseInt(rowData.percentCorrect) >= 90
-            ? rowData.id
-            : [rowData.id[0], rowData.id[1]]}
-        </Link>
-      ),
+      align: 'left',  
+      render: rowData => <Link href={`${process.env.CLIENT_URL}:${process.env.PORT}/profile/${rowData.id[0].key}`} 
+        style={{color: 'white'}} className='leaderboardLinks' 
+      >
+        {
+          parseInt(rowData.percentCorrect) >= 90 ? rowData.id : [rowData.id[0], rowData.id[1]]
+        }
+      </Link>
     },
     {
       headerClassName: 'leaderboardHeader',
@@ -84,35 +82,25 @@ const Leaderboard = ({ users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      customSort: (a, b) =>
-        a.percentCorrect[0] +
-        a.percentCorrect[1] -
-        (b.percentCorrect[0] + b.percentCorrect[1]),
-    },
+      customSort: (a, b) => (a.percentCorrect[0] + a.percentCorrect[1]) - (b.percentCorrect[0] + b.percentCorrect[1])
+    }
   ];
+  
+  const rows =
+    topFive.map(user => {
+      return {
+        id: [<img src={user.imageUrl} className='avatar' key={user._id} />, 
+          user.username, 
+          <img className='fireAvatar' 
+            src={'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='} />],
+        wins: user.wins,
+        gamesPlayed: user.totalGames, 
+        correctAnswers: user.qCorrect, 
+        questionsAttempted: user.qAttempted,
+        percentCorrect: user.qAttempted === 0 ? '-' : Math.round(user.qCorrect / user.qAttempted * 100) + '%'
+      };
+    });
 
-  const rows = users.map((user) => {
-    return {
-      id: [
-        <img src={user.imageUrl} className='avatar' key={user._id} />,
-        user.username,
-        <img
-          className='fireAvatar'
-          src={
-            'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='
-          }
-        />,
-      ],
-      wins: user.wins,
-      gamesPlayed: user.totalGames,
-      correctAnswers: user.qCorrect,
-      questionsAttempted: user.qAttempted,
-      percentCorrect:
-        user.qAttempted === 0
-          ? '-'
-          : Math.round((user.qCorrect / user.qAttempted) * 100) + '%',
-    };
-  });
 
   return (
     <div>
@@ -123,7 +111,8 @@ const Leaderboard = ({ users }) => {
         columns={columns}
         options={{
           padding: 'dense',
-          pageSize: 10,
+          paging: false,
+          search: false,
           draggable: false,
           showFirstLastPageButtons: false,
           emptyRowsWhenPaging: false,
@@ -132,11 +121,11 @@ const Leaderboard = ({ users }) => {
             color: '#FFFFFF',
             backgroundColor: '#6e6e6e',
             textShadow: '3px 2px 3px rgba(255,255,255,.2)',
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           },
           cellStyle: {
             backgroundColor: '#333333',
-            color: 'white',
+            color: 'white'
           },
         }}
       />
@@ -144,4 +133,4 @@ const Leaderboard = ({ users }) => {
   );
 };
 
-export default Leaderboard;
+export default TopFive;

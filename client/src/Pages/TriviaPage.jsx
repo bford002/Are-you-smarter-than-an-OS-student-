@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Questions from '../Components/Questions.jsx';
 
 const TriviaPage = ({ user, setUser, daily, customLink }) => {

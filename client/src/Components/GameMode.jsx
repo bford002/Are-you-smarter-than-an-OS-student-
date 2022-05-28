@@ -6,10 +6,9 @@ import {
   InputLabel,
   Button,
 } from '@mui/material';
-import Custom from '../Pages/Custom.jsx';
 import { useNavigate } from 'react-router-dom';
 
-const GameMode = ({ user, setUser, type, setCustomLink }) => {
+const GameMode = ({ type, setCustomLink }) => {
   const [difficulty, setDifficulty] = useState('Any');
   const [category, setCategory] = useState('Any');
   const [questions, setQuestions] = useState('5');
@@ -31,7 +30,6 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
     setPlayedDaily(!true);
     // patch user to say they played the daily today
   };
-  const onSubmitClassic = () => {};
   const onSubmitCustom = () => {
     //create a link
     let link = `https://opentdb.com/api.php?amount=${questions}`;
@@ -81,7 +79,6 @@ const GameMode = ({ user, setUser, type, setCustomLink }) => {
           <Button
             variant='contained'
             className='gameButton'
-            onClick={onSubmitClassic}
             href='/trivia'
           >
             Play!

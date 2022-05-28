@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from '../Pages/Home.jsx';
 import Leaderboard from '../Pages/Leaderboard.jsx';
 import Profile from './Profile.jsx';
@@ -12,8 +12,6 @@ import { Navbar } from '../Components/NavBar.jsx';
 import UserProfile from '../Pages/UserProfile.jsx';
 import TriviaPage from '../Pages/TriviaPage.jsx';
 
-// const CLIENT_URL = process.env.CLIENT_URL;
-// const PORT = process.env.PORT;
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -83,6 +81,7 @@ export const App = () => {
     <div>
       <Navbar user={user} />
       <BrowserRouter>
+
         {users.map((user) => {
           return <Link to={'/profile/' + user._id} key={user._id} />;
         })}
@@ -94,6 +93,7 @@ export const App = () => {
               element={
                 <Home
                   user={user}
+                  users={users}
                   setUser={setUser}
                   setCustomLink={setCustomLink}
                 />

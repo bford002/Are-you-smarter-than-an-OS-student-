@@ -13,7 +13,6 @@ const Profile = ({ users }) => {
     axios
       .get(`/users/${params._id}`)
       .then((results) => {
-        // console.log(results.data, 'RESULTS');
         setUser(results.data[0]);
       })
       .catch((err) => {
