@@ -39,7 +39,7 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-    daily: {
+    dailyCompleted: {
       type: Boolean,
       default: false,
     },

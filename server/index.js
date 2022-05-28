@@ -7,6 +7,8 @@ const cron = require('node-cron');
 const passport = require('passport');
 require('./auth');
 const Question = require('./db/models/questions.model.js');
+const User = require('./db/models/user.model.js');
+
 const axios = require('axios');
 
 const app = express();
@@ -34,14 +36,20 @@ app.use('/users', usersRouter);
 app.use('/questions', questionsRouter);
 app.use('/auth', authRouter);
 // 59 59 23
-cron.schedule('59 59 23 * * *', () => {
+cron.schedule('01 * * * * *', () => {
   // console.log(new Date().toLocaleString());
   axios.get('https://opentdb.com/api.php?amount=10').then((results) => {
     // console.log(results.data.results);
     Question.updateOne(
       { name: 'Daily' },
       { questions: results.data.results }
-    ).then();
+    ).then(() => {
+      User.updateMany({ dailyCompleted: true }, { dailyCompleted: false }).then(
+        (results) => {
+          console.log(results);
+        }
+      );
+    });
   });
 });
 
