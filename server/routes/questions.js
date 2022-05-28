@@ -4,7 +4,6 @@ const Question = require('../db/models/questions.model.js');
 router.route('/').get((req, res) => {
   Question.find({ name: 'Daily' })
     .then((questions) => {
-      // console.log(questions);
       res.send({
         results: questions[0].questions,
       });

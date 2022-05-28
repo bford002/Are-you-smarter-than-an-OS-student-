@@ -5,20 +5,11 @@ import { Typography, Toolbar, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// do axios request to patch a user when they click certain buttons
-// send along whatever you need
-// get user again to update info
-// patch should always send an object where {thingtochange: changed info}
-// seperate username and avatar to diffrent sides of screen
-// make avatar clickable to then show a component that allows you to change your avatar
-// add edit button to side of username, when clicked do show component
 
 const UserProfile = ({ user, getUser, editable }) => {
   const [displayEditImage, setDisplayEditImage] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [deleteText, setDeleteText] = useState('');
-
-  const navigate = useNavigate();
 
   const addDefaultProfile = () => {
     axios
@@ -52,10 +43,6 @@ const UserProfile = ({ user, getUser, editable }) => {
           console.log(results);
         });
     }
-
-    // check if DELETE is in input field
-    //send user to logout
-    // send delete axios request to delete user
   };
 
   return (
@@ -85,7 +72,6 @@ const UserProfile = ({ user, getUser, editable }) => {
                 <div
                   className='overlayBox'
                   onClick={() => {
-                    // console.log('click');
                     setDisplayEditImage(!displayEditImage);
                   }}
                   style={{ marginLeft: '21%' }}
@@ -183,7 +169,6 @@ const UserProfile = ({ user, getUser, editable }) => {
           )}
         </h1>
       </div>
-      {/* {console.log(user)} */}
     </div>
   );
 };

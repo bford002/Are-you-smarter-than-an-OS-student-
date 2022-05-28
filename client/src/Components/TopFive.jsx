@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import { Link, Typography, TablePagination } from '@material-ui/core';
-import axios from 'axios';
+import { Link, Typography } from '@material-ui/core';
 import '../App.css';
 
 // TABLE MATERIALUI
-import MaterialTable, { MTableToolbar, MTablePagination } from '@material-table/core';
+import MaterialTable from '@material-table/core';
 
-const TopFive = ({ user, users }) => {
+const TopFive = ({ users }) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [topFive, setTopFive] = useState(users.slice(0, 5));
+  const topFive = users.slice(0, 5);
 
   useEffect(() => {
     setIsLoading(false);

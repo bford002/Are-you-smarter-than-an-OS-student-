@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { AppBar, Toolbar } from '@material-ui/core';
-// import { Link } from "react-router-dom";
 import { Button, Typography, Link } from '@mui/material';
 
 export const Navbar = ({ user }) => {
