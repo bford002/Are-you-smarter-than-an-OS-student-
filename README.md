@@ -73,12 +73,6 @@ npm run build:client
 ```
 npm start
 ```
-7. If testing locally, some changes need to be made to ~/server/routes/auth.js
-```
-1. Uncomment line 6
-2. Comment out line 5
->vice-versa for deployment<
-```
 
 # Google OAuth
 Google Oauth requires a google cloud account. First create your account and then navigate to the developer console. Go to credentials and press "create credentials" and then click "OAuth Client ID". Follow the on-screen promps until you've recieved a CLIENT_ID and CLIENT_SECRET. These values go inside the .env file. Also ensure you add all authorized redirect URI's to your google API credentials.
