@@ -22,7 +22,7 @@ const Home = ({ user, setUser, setCustomLink, users }) => {
 
   return (
     <div>
-      <h1 className='homeTitle'>Are you smarter than an OS Student?!</h1>
+      <h1 className='homeTitle'>Are you smarter than an OpSpark Student?!</h1>
       {user ? (
         <div className='gameSelection'>
           {gameModes.map((gameMode, i) => {
@@ -38,13 +38,6 @@ const Home = ({ user, setUser, setCustomLink, users }) => {
           })}
         </div>
       ) : (
-        // <Button
-        //   href='/trivia'
-        //   variant='contained'
-        //   sx={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
-        // >
-        //   Click to play!
-        // </Button>
         <Button
           variant='contained'
           href={`${process.env.CLIENT_URL}:${process.env.PORT}/auth/google`}

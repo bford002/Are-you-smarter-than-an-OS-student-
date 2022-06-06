@@ -7,4 +7,3 @@ const uri = process.env.ATLAS_URI;
 const connection = mongoose.connect(uri, { useNewUrlParser: true });
 
 module.exports.connection = connection;
-

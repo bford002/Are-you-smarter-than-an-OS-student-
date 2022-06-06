@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Link, Typography, TablePagination } from '@material-ui/core';
-import axios from 'axios';
+import { Link, Typography } from '@material-ui/core';
 import '../App.css';
-import { Button } from '@mui/material';
-import TopFive from '../Components/TopFive.jsx';
 
 // TABLE MATERIALUI
 import MaterialTable from '@material-table/core';
 
-const Leaderboard = ({ user, users }) => {
+const Leaderboard = ({ users }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
-
 
   const Title = ({ text = 'Trivia Leaderboard', variant = 'h4' }) => (
     <Typography
@@ -38,7 +32,7 @@ const Leaderboard = ({ user, users }) => {
       headerClassName: 'leaderboardHeader',
       title: 'Rank',
       align: 'center',
-      render: (rowData) => rowData.tableData.index + 1
+      render: (rowData) => rowData.tableData.index + 1,
     },
     {
       field: 'id',
@@ -51,9 +45,9 @@ const Leaderboard = ({ user, users }) => {
           style={{ color: 'white' }}
           className='leaderboardLinks'
         >
-          {
-            rowData.percentCorrect[0] >= 9 ? rowData.id : [rowData.id[0], rowData.id[1]]
-          }
+          {parseInt(rowData.percentCorrect) >= 90
+            ? rowData.id
+            : [rowData.id[0], rowData.id[1]]}
         </Link>
       ),
     },
@@ -90,10 +84,17 @@ const Leaderboard = ({ user, users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      customSort: (a, b) =>
-        a.percentCorrect[0] +
-        a.percentCorrect[1] -
-        (b.percentCorrect[0] + b.percentCorrect[1]),
+      customSort: (a, b) => {
+        let tempA = a.percentCorrect;
+        let tempB = b.percentCorrect;        
+        if (tempA === '-') {
+          tempA = 0;
+        }
+        if (tempB === '-') {
+          tempB = 0;
+        }
+        return parseInt(tempA) - parseInt(tempB);
+      },
     },
   ];
 
@@ -102,8 +103,13 @@ const Leaderboard = ({ user, users }) => {
       id: [
         <img src={user.imageUrl} className='avatar' key={user._id} />,
         user.username,
-        <img className='fireAvatar' 
-          src={'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='} />],
+        <img
+          className='fireAvatar'
+          src={
+            'https://media.istockphoto.com/vectors/fire-flame-icon-isolated-bonfire-sign-emoticon-flame-symbol-isolated-vector-id1137962021?k=20&m=1137962021&s=612x612&w=0&h=Ub026rl_amXtLNPbMMJRQHDcJ93G_v5d23C55OUtqXk='
+          }
+        />,
+      ],
       wins: user.wins,
       gamesPlayed: user.totalGames,
       correctAnswers: user.qCorrect,

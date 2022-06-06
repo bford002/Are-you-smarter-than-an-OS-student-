@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import { Link, Typography, TablePagination } from '@material-ui/core';
-import axios from 'axios';
+import { Link, Typography } from '@material-ui/core';
 import '../App.css';
 
 // TABLE MATERIALUI
-import MaterialTable, { MTableToolbar, MTablePagination } from '@material-table/core';
+import MaterialTable from '@material-table/core';
 
-const TopFive = ({ user, users }) => {
+const TopFive = ({ users }) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [topFive, setTopFive] = useState(users.slice(0, 5));
+  const topFive = users.slice(0, 5);
 
   useEffect(() => {
     setIsLoading(false);
@@ -47,7 +45,7 @@ const TopFive = ({ user, users }) => {
         style={{color: 'white'}} className='leaderboardLinks' 
       >
         {
-          rowData.percentCorrect[0] >= 9 ? rowData.id : [rowData.id[0], rowData.id[1]]
+          parseInt(rowData.percentCorrect) >= 90 ? rowData.id : [rowData.id[0], rowData.id[1]]
         }
       </Link>
     },
@@ -84,7 +82,17 @@ const TopFive = ({ user, users }) => {
       field: 'percentCorrect',
       title: 'Percent Correct',
       type: 'numeric',
-      customSort: (a, b) => (a.percentCorrect[0] + a.percentCorrect[1]) - (b.percentCorrect[0] + b.percentCorrect[1])
+      customSort: (a, b) => {
+        let tempA = a.percentCorrect;
+        let tempB = b.percentCorrect;        
+        if (tempA === '-') {
+          tempA = 0;
+        }
+        if (tempB === '-') {
+          tempB = 0;
+        }
+        return parseInt(tempA) - parseInt(tempB);
+      }
     }
   ];
   
